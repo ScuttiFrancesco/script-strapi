@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "script-strapi"
+version = "0.1.0"
+description = "Script di automazione per Strapi"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.0",
+    "requests>=2.32",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.9",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=src --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["src"]

@@ -1,0 +1,5 @@
+# Dipendenze di produzione
+python-dotenv>=1.0
+requests>=2.32
+
+# Dipendenze di sviluppo (installa con: pip install -r requirements-dev.txt)
