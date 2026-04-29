@@ -32,7 +32,7 @@ def fields_validation(field : str, collection_name: str, value) :
     """Valida un campo in base allo schema Strapi."""
     field_type = sf[collection_name].get(field)
     if field_type is not None:
-        if value is None or pd.isna(value) or value == '' or value == 'NULL' or value == 'null':
+        if pd.isna(value) or value == '' or value == 'NULL' or value == 'null':
             return None
         match field_type.__name__:
             case 'int':

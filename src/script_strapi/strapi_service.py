@@ -18,7 +18,7 @@ def insert(collection_name: str, data: dict) :
         response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify)
         response.raise_for_status()
         print(f"Data inserted successfully")
-        return response
+        return True
     except req.RequestException as e:
         print(f"Error inserting data into {collection_name}: {e.response.text}")
-        return None
+        return False

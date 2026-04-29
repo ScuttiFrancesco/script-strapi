@@ -26,14 +26,22 @@ if collection_name not in sf:
 
 def main() -> None:    
     df = deserialize_excel(collection_name)
+    inseriti = 0
+    falliti = 0
 
     if df is not None:
         for dict in df.iloc:
             try:
                 strapi_object = create_strapi_object(collection_name, dict.to_dict())
-                insert(collection_name, strapi_object)
+                if insert(collection_name, strapi_object):
+                    inseriti += 1
+                else:
+                    falliti += 1
             except Exception as e:
                 logger.warning(f"Record saltato per errore: {e}")
+                falliti += 1
             time.sleep(2)
+    logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
+
 if __name__ == "__main__":
     main()
