@@ -15,5 +15,6 @@ strapi_fields = {
     # VERIFICARE SE VIENE PASSATO IL CAMPO SLUG E IN CASO AGGIUNGERLO
     'gare-appaltos': {'title': str, 'anno': int, 'codiceCig': str, 'codiceUnivoco': str, 'idGara': str, 'dataInizio': str, 'dataScadenza': str, 'statoPostScadenza': str, 'descrizione': str, 'enteAppaltante': str, 
                       'oggettoProcedura': str, 'sceltaContraente': str, 'protocollo': str, 'fonte': str, 'fonteLista': str, 'listaLink': str, 'numero': int, 'importo': float, 'publicationDate': str},
-    'ordini-giornos': {'title': str, 'comune': str, 'publicationDate': str}
+    'ordini-giornos': {'title': str, 'comune': str, 'publicationDate': str},
+    'paginas': {'title': str, 'ordineVisualizzazioneMenu': int, 'tipoLayout': str, 'pagina': dict}
 }
