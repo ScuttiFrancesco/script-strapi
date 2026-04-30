@@ -9,7 +9,7 @@ import os
 import time
 from strapi_fields import strapi_fields as sf
 from dotenv import load_dotenv
-from strapi_service import insert
+from strapi_service import *
 from deserialize_excel import deserialize_excel, create_strapi_object
 from strapi_obj import *
 
@@ -25,6 +25,21 @@ collection_name = input("Inserisci il nome della collection Strapi da popolare(p
 if collection_name not in sf:
     print("Nome della collection non valido.")
     exit(1)
+
+def ciclo_ricorsivo(array: list, parent_id: str) -> None:
+    for index, item in enumerate(array):
+        # item è {"-P-Titolo": [...figli...]}
+        title = list(item.keys())[0]
+        children = item[title]
+        strapi_object = vars(create_pagina_object(title, (index + 1), parent_id))
+        new_id = insert(collection_name, strapi_object)
+        if new_id:
+            logger.info(f"Pagina---->{title} <----inserita con successo.")
+            if children:
+                ciclo_ricorsivo(children, new_id)
+        else:
+            logger.error(f"******ATTENZIONE*******Errore durante l'inserimento della pagina---->{title} <----.")
+        time.sleep(2)
 
 def main() -> None:   
     if collection_name != 'paginas': 
@@ -47,12 +62,16 @@ def main() -> None:
         logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
     else:
         try:
-            for index, pag in enumerate(lista):
-                strapi_object = vars(create_pagina_object(pag, index * 10))
-                if insert(collection_name, strapi_object):
-                    logger.info(f"Pagina---->${pag} <----inserita con successo.")
+            for index, pag in enumerate(lista.keys()):
+                strapi_object = vars(create_pagina_object(pag, (index + 1), 'ruib9v0ouejy8j8r959kodhc'))
+                new_id = insert(collection_name, strapi_object)
+                if new_id:
+                    logger.info(f"Pagina---->{pag} <----inserita con successo.")
+                    if lista[pag]:
+                        ciclo_ricorsivo(lista[pag], new_id)
                 else:
-                    logger.error(f"******ATTENZIONE*******Errore durante l'inserimento della pagina---->${pag} <----.")
+                    logger.error(f"******ATTENZIONE*******Errore durante l'inserimento della pagina---->{pag} <----.")
+                time.sleep(2)
         except Exception as e:
             logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}")
 
