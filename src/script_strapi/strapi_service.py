@@ -2,6 +2,8 @@ import requests as req
 import os
 from dotenv import load_dotenv
 import random
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 load_dotenv()
 
