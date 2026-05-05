@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-
-import json
 import logging
 import os
 import time
@@ -63,7 +61,7 @@ def main() -> None:
     else:
         try:
             for index, pag in enumerate(lista.keys()):
-                strapi_object = vars(create_pagina_object(pag, (index + 1), 'ruib9v0ouejy8j8r959kodhc'))
+                strapi_object = vars(create_pagina_object(pag, (index + 1), 'reb7me00l38yza2zse7joy50'))
                 new_id = insert(collection_name, strapi_object)
                 if new_id:
                     logger.info(f"Pagina---->{pag} <----inserita con successo.")

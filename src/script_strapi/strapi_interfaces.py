@@ -22,10 +22,13 @@ class AmministrazioneTrasparenteCollaborazione:
         self.publicationDate = publicationDate
 
 class Pagina:
-    def __init__(self, title: str, ordineVisualizzazioneMenu: int, tipoLayout: str = 'wrapper', pagina: dict = None, publishedAt: str = '2026-01-01', slug: str = None) -> None:
+    def __init__(self, title: str, ordineVisualizzazioneMenu: int, tipoLayout: str = 'wrapper', pagina: dict = None, publishedAt: str = '2026-01-01', slug: str = None, titolo: str = None, spalla_destra: list = None, blocco_centrale: list = None) -> None:
         self.title = title
         self.ordineVisualizzazioneMenu = ordineVisualizzazioneMenu
         self.tipoLayout = tipoLayout
         self.pagina = pagina
         self.publishedAt = publishedAt
         self.slug = slug
+        self.titolo = titolo
+        self.spalla_destra = spalla_destra
+        self.blocco_centrale = blocco_centrale
