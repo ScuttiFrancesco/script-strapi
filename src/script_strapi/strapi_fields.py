@@ -2,7 +2,7 @@ strapi_fields = {
     'amministrazione-trasparente-collaboraziones': {'datiFiscali': str, 'unitaAmministrativa': str, 'denominazione': str, 'oggettoIncarico': str, 'estremiAttoConferimentoIncarico': str, 'importoCompenso': str, 'incarichiAltrePA': str, 'retribuzioneDiRisultato': str, 'annoRiferimento': str, 'dataInizio': str, 'dataFine': str, 'publicationDate': str},
     'appuntamenti-storias': {'title': str, 'data': str, 'testo': str, 'linkUtili': str, 'publicationDate': str},
     'medaglies': {'title': str, 'grado': str, 'dataConcessione': str, 'dataLuogoNascita': str, 'dataLuogoMorte': str, 'dataLuogoFatto': str, 'motivazione': str, 'note': str, 'linkUtili': str, 'categoria_medaglieres': dict, 'publicationDate': str},
-    'concrso-faqs': {'numero': int, 'titolo': str, 'risposta': str, 'domanda': str, 'richiedente': str, 'categoria_faqs': dict, 'publicationDate': str},
+    'concorso-faqs': {'numero': int, 'titolo': str, 'risposta': str, 'domanda': str, 'richiedente': str, 'categoria_faqs': dict, 'publicationDate': str},
     'attis': {'title': str, 'titolo': str, 'cig': str, 'data': str, 'note': str, 'categoria_attis': dict, 'publicationDate': str},
     'concorsis': { 'titolo': str, 'stato': str,'numero': int, 'dataInizio': str, 'dataScadenzaDomanda': str, 'ruolo': str, 'mostraBoxPrenotaOnline': bool, 'tipologia': str, 'posti': str, 'sottotitolo': str, 'codiceConcorso': str, 'descrizione': str, 'listaLink': str, 'publicationDate': str},
     # VERIFICARE SE VIENE PASSATO IL CAMPO CATEGORIA-COCERS E IN CASO AGGIUNGERLO
