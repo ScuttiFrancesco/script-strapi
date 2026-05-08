@@ -5104,3 +5104,39 @@ araldica = {
     }
   ]
 }
+
+'area-concorsi' = {
+        {"-P-Concorsi Pubblici": []},
+        {"-P-Concorsi Interni": []},
+        {"-P-Archivio Concorsi": []},
+        {"-W-Reclutamento": [
+            {"-P-Diventare Ufficiale": []},
+            {"-P-Diventare Ispettore": []},
+            {"-P-Diventare Sovrintendente": []},
+            {"-P-Diventare Carabiniere": []},
+            {"-P-Ruoli e gradi": []},
+            {"-P-Nei Corazzieri": []},
+            {"-P-Delle donne": []},
+        ]},
+        {"-W-Formazione": [
+            {"-P-Formazione": []},
+            {"-P-La Scuola Marescialli e Brigadieri": []},
+        ]},
+        {"-W-FAQ": [
+            {"-P-In Generale": []},
+            {"-P-Piano assunzioni": []},
+            {"-P-Ufficiali ruolo normale": []},
+            {"-P-Ufficiali ruolo speciale": []},
+            {"-P-Ufficiali ruolo tecnico logistico": []},
+            {"-P-Ufficiali in ferma prefissata": []},
+            {"-P-Ispettori corso triennale": []},
+            {"-P-Ispettori corso annuale": []},
+            {"-P-Sovrintendenti concorso int. per App. Sc.": []},
+            {"-P-Sovrintendenti concorso interno": []},
+            {"-P-Carabinieri effettivi": []},
+            {"-P-Centro Sportivo Carabinieri": []},
+            {"-P-I Musicanti della Banda dell'Arma": []},
+            {"-P-Simulatore": []},
+        ]},
+        {"-P-Riserva Selezionata": []},
+}
