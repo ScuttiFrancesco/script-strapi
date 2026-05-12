@@ -1,7 +1,6 @@
 import requests as req
 import os
 from dotenv import load_dotenv
-import random
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -11,29 +10,38 @@ token = os.getenv("STRAPI_API_TOKEN", "")
 strapi_url = os.getenv("STRAPI_BASE_URL", "")
 ssl_verify = os.getenv("STRAPI_SSL_VERIFY", "false").lower() == "true"
 
-def insert(collection_name: str, data: dict) -> str | None:
-    path = strapi_url + collection_name
+def get_data(slug: str) -> str | None:
+    path = strapi_url + 'paginas?pLevel=2&filters[slug][$eq]=' + slug
     headers = {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
     }
     try:
-        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify)
-        response.raise_for_status()
-        document_id = response.json()['data']['documentId']
-        print(f"Data inserted successfully. Document ID: {document_id}")
-        return document_id
+        get_response = req.get(path, headers=headers, verify=ssl_verify)
+        get_response.raise_for_status()
+        data = get_response.json()['data'][0]
+        documentId = data['documentId']
+        return documentId
     except req.RequestException as e:
-        print(f"Error inserting data into {collection_name}: {e.response.text}")
-        slug = data.get('title', '').lower().replace(' ', '-').replace("'", '-').replace(',', '').replace('.', '').replace('(', '').replace(')', '').replace('&', '-e-') + '-' + random.randint(100,1000).__str__()
-        if slug:
-            try:
-                data_with_slug = {**data, 'slug': slug}
-                response = req.post(path, json={"data": data_with_slug}, headers=headers, verify=ssl_verify)
-                response.raise_for_status()
-                document_id = response.json()['data']['documentId']
-                print(f"Retry OK con slug. Document ID: {document_id}")
-                return document_id
-            except req.RequestException as e2:
-                print(f"Retry fallito: {e2.response.text}")
+        print(f"Error retrieving data: {e}")               
         return None
+
+# Chiamata PUT verso Strapi per aggiornare il blocco centrale con i nuovi URL delle immagini
+def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> None:
+    path = strapi_url + 'paginas/' + documentId
+    headers = {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
+    payload = {
+        "data": {
+            "blocco_centrale": blocco_centrale,
+            "spalla_destra": spalla_destra
+        }
+    }
+    try:
+        put_response = req.put(path, json=payload, headers=headers, verify=ssl_verify)
+        put_response.raise_for_status()
+        print(f"Data updated successfully for document ID: {documentId}")
+    except req.RequestException as e:
+        print(f"Error updating data: {e.response.text}")
