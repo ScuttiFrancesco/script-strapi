@@ -28,9 +28,14 @@ def get_data(slug: str) -> str | None:
         for blocco in blocco_centrale:
             if 'id' in blocco:
                 del blocco['id']
+        spalla_destra = data['spalla_destra']
+        for blocco in spalla_destra:
+            if 'id' in blocco:
+                del blocco['id']
         documentId = data['documentId']
         blocco_centrale = handle_contenuto(blocco_centrale)
-        return {"documentId": documentId, "blocco_centrale": blocco_centrale}
+        spalla_destra = handle_contenuto(spalla_destra)
+        return {"documentId": documentId, "blocco_centrale": blocco_centrale, "spalla_destra": spalla_destra}
     except req.RequestException as e:
         print(f"Error retrieving data: {e}")               
         return None
@@ -67,7 +72,7 @@ def find_and_replace(editor: str) -> str:
     return editor
 
 # Chiamata PUT verso Strapi per aggiornare il blocco centrale con i nuovi URL delle immagini
-def update_data(documentId: str, blocco_centrale: list):
+def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> None:
     path = strapi_url + 'paginas/' + documentId
     headers = {
         'Authorization': 'Bearer ' + token,
@@ -75,7 +80,8 @@ def update_data(documentId: str, blocco_centrale: list):
     }
     payload = {
         "data": {
-            "blocco_centrale": blocco_centrale
+            "blocco_centrale": blocco_centrale,
+            "spalla_destra": spalla_destra
         }
     }
     try:
