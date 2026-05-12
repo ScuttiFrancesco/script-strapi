@@ -102,15 +102,36 @@ def insert_image(image_path: str) -> str | None:
         if files is None:
             print(f"Failed to deserialize image from path: {image_path}")
             return None
-        response = req.post(path, files=files, headers=headers, verify=ssl_verify)
-        response.raise_for_status()
-        image_id = response.json()[0]['id']
-        image_path = response.json()[0]['url']
-        print(f"Image uploaded successfully. Image ID: {image_id} URL: {strapi_url.replace('/api', '')}{image_path}")
-        return image_path
+        old_image_url = image_exists(files['files'][0])
+        if old_image_url:
+            print(f"Image already exists in Strapi. Using existing URL: {old_image_url}")
+            return old_image_url
+        else:
+            response = req.post(path, files=files, headers=headers, verify=ssl_verify)
+            response.raise_for_status()
+            image_id = response.json()[0]['id']
+            image_path = response.json()[0]['url']
+            print(f"Image uploaded successfully. Image ID: {image_id} URL: {strapi_url.replace('/api', '')}{image_path}")
+            return image_path
     except req.RequestException as e:
         print(f"Error uploading image: {e}")
         if e.response is not None:
             print(f"  Status: {e.response.status_code}")
             print(f"  Body: {e.response.text}")
+        return None
+    
+def image_exists(name: str) -> str | None:
+    path = strapi_url + "upload/files?filters[name][$eq]=" + name
+    headers = { 
+        'Authorization': 'Bearer ' + token
+    }
+    try:
+        response = req.get(path, headers=headers, verify=ssl_verify)
+        response.raise_for_status()
+        data = response.json()
+        if data:
+            return data[0]['url']
+        return None
+    except req.RequestException as e:
+        print(f"Error checking image existence: {e}")
         return None
