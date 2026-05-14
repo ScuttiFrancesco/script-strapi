@@ -1,6 +1,6 @@
 from strapi_interfaces import Pagina as pg
 
-def create_pagina_object(title: str, index: int, document_id: str) -> pg:
+def create_pagina_object(title: str, index: int, document_id: str, mostra_in_menu: str) -> pg:
     """Crea un oggetto Pagina a partire dai parametri."""
     relation = {
         'connect': [
@@ -22,10 +22,8 @@ def create_pagina_object(title: str, index: int, document_id: str) -> pg:
     ]
     title_parsed = title.removeprefix('-W-').removeprefix('-P-')
     tipo_layout = 'wrapper' if title.startswith('-W-') else 'pagina'
-    return pg(title_parsed, index, tipo_layout, relation, '2026-01-01', None, title_parsed, menu, contenuto)
+    return pg(title_parsed, index, tipo_layout, relation, '2026-01-01', None, title_parsed, menu, contenuto, mostra_in_menu)
 
 lista =  {
-    "-P-Codice Rosso": [],
-    "-P-Una stanza tutta per sé": [],
-    "-P-Gioco da tavolo": []
+    "-P-Il Calendario": [],
 }
