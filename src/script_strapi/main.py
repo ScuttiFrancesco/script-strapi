@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import logging
 import os
-from strapi_fields import strapi_fields as sf
 from dotenv import load_dotenv
 from strapi_service import *
 from strapi_obj import *
