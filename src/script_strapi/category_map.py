@@ -1,42 +1,42 @@
 categories ={
     'medaglies': {
-        'medaglia-d-oro-al-valor-civile': 'jpz8zidjicniq620dozug9h4',
-        'medaglia-d-oro-al-valor-civile-alla-memoria': 'uyh63kxwo73gj5o7wasqumze',
-        'medaglia-d-oro-al-valor-dell-arma-dei-carabinieri': 'c47qw4bwrkp32csxbucwu6zo',
-        'medaglia-d-oro-al-valor-dell-arma-dei-carabinieri-alla-memoria': 'bynp0om3gxzl7aewd2wnpyk6',
-        'medaglia-d-oro-al-valor-dell-esercito': 'p1tne11bi8d0buarz0cax1c6',
-        'medaglia-d-oro-al-valor-militare': 'csdl1v67ambzrahvpe9w2dsx',
-        'medaglia-d-oro-al-valor-militare-alla-memoria': 'hwiylyc6w7xxucsficri1k7h',
-        'medaglia-d-oro-al-valor-di-marina-alla-memoria': 'lmykfqlwuvfjrktewq49ulz6'
+        'medaglia-d-oro-al-valor-civile': 'q2k73aqx2xazuh5fatbp8tka',
+        'medaglia-d-oro-al-valor-civile-alla-memoria': 'k65nxxqotrj85dmaugupz9lh',
+        'medaglia-d-oro-al-valor-dell-arma-dei-carabinieri': 'itpouzz553sq20trnx6akxnk',
+        'medaglia-d-oro-al-valor-dell-arma-dei-carabinieri-alla-memoria': 'i7n3scq1t4hijf5519jzzgtf',
+        'medaglia-d-oro-al-valor-dell-esercito': 'c9u2bzfgcqqtcsn72fyv8mky',
+        'medaglia-d-oro-al-valor-militare': 'n7q8p9zcvg2xw17qdcobwp4q',
+        'medaglia-d-oro-al-valor-militare-alla-memoria': 'vmqlfhx3zxz994xl3jdpltte',
+        'medaglia-d-oro-al-valor-di-marina-alla-memoria': 'd0kqt0qveh1i58qvmya2wu8x'
     },
     'attis': {
-        'pre-informazione': 'divhkksm3e762dnod152gjjd',
-        'determina': 'ds0ek1juslil8y6mkhwrms9o',
-        'esclusione': 'rn5q0kon8cpxp6tc0ql1or7h',
-        'commissione': 'twnpd8x2z2tgu8o3p2pqdj31',
-        'gare-appalto': 'k85elvgzxblgz4uffv2kflsl',
-        'acquisizione-beni-e-servizi': 'hnia1aiargtiy7rj5u3n4xmw',
-        'risultati': 'wk2phqoupy40eueddladqb80',
-        'decreto': 'aczngrwovee6zqv3ot2b602u',
-        'avvisi-e-bandi': 'd75t7gpajn9kjir1ms4iyozo'
+        'pre-informazione': 'h9p8ph97ob0l5ag7ff8jxpt6',
+        'determina': 'ie5knmir53gdyionoqddox23',
+        'esclusione': 'mdjwoelogxdcis1ww8q7nplo',
+        'commissione': 'vsekpck8w21hd0bct7c86yqh',
+        'gare-appalto': 'jxhc47rs2zgjtgka3vjjfsn7',
+        'acquisizione-beni-e-servizi': 'tn6qjvbc47t43pekze3boc7n',
+        'risultati': 'z78crazp9vczqa6jb0q8o8u8',
+        'decreto': 'k0dtgiy9gwwdm6p5lwp9wcku',
+        'avvisi-e-bandi': 'j65697teauraqicunmnp7ngi'
     },
     'comunicazioni-cocers': {
-        'cocer': 'jbszhqgwddkcj9j7pyjobyr2'
+        'cocer': 'a1x5btalztw53r8d1nskoat6'
     },
     'concorso-faqs': {
-        'in-generale': 'edjnsbw2vjx5pvznkk7mgyh5',
-        'piano-assunzioni': 'xee2q9kv5ekja7555wctwnsw',
-        'ufficiali-ruolo-normale': 'e1ctflcvc7wiw6k6lsbily8l',
-        'ufficiali-ruolo-speciale': 's5i7frzpqvgcjwowt7stw9q5',
-        'ufficiali-ruolo-tecnico-logistico': 'wpfqtp996a510eum64jcjnrv',
-        'ufficiali-in-ferma-prefissata': 'gkii3hj5bfazux8bif3j5juo',
-        'ispettori-corso-triennale': 'uw2wncd0f0k6shgzc1st4v46',
-        'ispettori-corso-annuale': 'c5p8o2i4z13rkrlznsv2v21b',
-        'sovrintendenti-concorso-int-per-app-sc': 'qe9y2ig7lr67e64sk3b5t46w',
-        'sovrintendenti-concorso-interno': 'iw4174jphazrqf7uv5t419g1',
-        'carabinieri-effettivi': 'ghgpcoal7san09vfyfbsts0y',
-        'centro-sportivo-carabinieri': 'as39btm74d778pqacip37dc6',
-        'i-musicanti-della-banda-dellarma': 'd8wnuh1maq3nvkqntwfio6ox',
-        'simulatore': 'hbg4p5fugywt8kqhyz07rcn2'
+        'in-generale': 'wbrr3jje9g53syn2kmqgdjks',
+        'piano-assunzioni': 'ml9xpi01asr82v0z2edxe44r',
+        'ufficiali-ruolo-normale': 'ez4xe9vqqsnf6idvzht6o3tg',
+        'ufficiali-ruolo-speciale': 'jvf0vsi0gtsqe7vgdl16976f',
+        'ufficiali-ruolo-tecnico-logistico': 'fldmd65a8f70vip2hy7wdh2w',
+        'ufficiali-in-ferma-prefissata': 'mnmq2q3te73u6tt53lf9wrf2',
+        'ispettori-corso-triennale': 'q4ses7nbbyua6yk0mm9c8vgq',
+        'ispettori-corso-annuale': 'p8nauxussl0q9d92ek8jtz3t',
+        'sovrintendenti-concorso-int-per-app-sc': 'suhfxgnt2k876hw2q0a3dhyy',
+        'sovrintendenti-concorso-interno': 'wn7r6tdpwpwgqsajqlu90e3o',
+        'carabinieri-effettivi': 'ukf7eplgofe2wa0qy6b2zaco',
+        'centro-sportivo-carabinieri': 'ak0gkldzjjcpihybrba28jrb',
+        'i-musicanti-della-banda-dell-arma': 'c0qdio4c0jopq03gu2jhgsth',
+        'simulatore': 'nlgxw65511fhz05fapsp66rb'
     },
 }
