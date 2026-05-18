@@ -43,7 +43,7 @@ def main() -> None:
                 except Exception as e:
                     logger.warning(f"Record saltato per errore: {e}")
                     falliti += 1
-                time.sleep(2)
+                time.sleep(1)
         logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
     else:
         try:
