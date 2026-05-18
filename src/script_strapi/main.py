@@ -17,18 +17,21 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-url = 'https://www.carabinieri.it/media---comunicazione/rassegna-dell-arma/informazioni'
-slug = 'informazioni-1'
+url = 'https://www.carabinieri.it/in-vostro-aiuto/amm-trasp/amm-trasp-cc/bandi-di-gara-e-contratti/atti-amm-aggiudicatrici/atti-relativi-alle-procedure/2018-(ii-sem.)'
 
 def main() -> None:   
         try:
-            document_id = get_data(slug)
-            centro_spalla = create_pagina_object(url)
-            blocco_centrale = centro_spalla['blocco_centrale']
-            spalla_destra = centro_spalla['spalla_destra']
-            update_data(document_id, blocco_centrale, spalla_destra)
+           lista_files = parse_righe_tabella(url)
+           for i, file_path in enumerate(lista_files):
+                file_info = insert_file(file_path)
+                slug = file_info['name'].split('.')[0]
+                file_id = file_info['file_id']
+                documentId = get_data(slug)
+                update_data(documentId, file_id)
+                if i >= 1:  
+                    break
         except Exception as e:
-            logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}")
+            logger.error(f"Errore durante la creazione o l'inserimento dell'atto: {e}")
 
 if __name__ == "__main__":
     main()
