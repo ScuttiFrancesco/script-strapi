@@ -539,6 +539,7 @@
 }
 
 'Equipaggiamento e Materiali' ={
+  "-P-Equipaggiamento e Materiali": [], 
   "-W-1814-1860": [
     { "-P-Sommario": [] },
     {
