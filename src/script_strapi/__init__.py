@@ -1,5 +1,5 @@
 """script-strapi package."""
-organizzazione = {
+'organizzazione' = {
   "-W-In generale": [
     { "-P-Cenni storici": [] },
     { "-P-Compiti, funzioni e dipendenze": [] }
@@ -421,7 +421,7 @@ organizzazione = {
   ]
 }
 
-medagliere = {
+'medagliere' = {
   "-W-Ricompense alla Bandiera": [
     { "-P-Croce di Cavaliere dell'Ordine Militare d'Italia": [] },
     { "-P-Medaglia d'Oro al Valor Militare": [] },
@@ -654,7 +654,7 @@ medagliere = {
   ]
 }
 
-mezzi = {
+'mezzi' = {
   "-P-All'inizio era il cavallo": [],
   "-P-Le \"macchine ciclistiche\"": [],
   "-P-La Motorizzazione": [],
@@ -664,7 +664,7 @@ mezzi = {
   "-P-L'Arma naviga": []
 }
 
-araldica = {
+'araldica' = {
   "-P-Stemma Araldico del 1935": [],
   "-P-Stemma Araldico del 1952": [],
   "-P-Stemma Araldico del 1977": [],
@@ -5106,10 +5106,10 @@ araldica = {
 }
 
 'area-concorsi' = {
-        {"-P-Concorsi Pubblici": []},
-        {"-P-Concorsi Interni": []},
-        {"-P-Archivio Concorsi": []},
-        {"-W-Reclutamento": [
+        "-P-Concorsi Pubblici": [],
+        "-P-Concorsi Interni": [],
+        "-P-Archivio Concorsi": [],
+        "-W-Reclutamento": [
             {"-P-Diventare Ufficiale": []},
             {"-P-Diventare Ispettore": []},
             {"-P-Diventare Sovrintendente": []},
@@ -5117,12 +5117,12 @@ araldica = {
             {"-P-Ruoli e gradi": []},
             {"-P-Nei Corazzieri": []},
             {"-P-Delle donne": []},
-        ]},
-        {"-W-Formazione": [
+        ],
+        "-W-Formazione": [
             {"-P-Formazione": []},
             {"-P-La Scuola Marescialli e Brigadieri": []},
-        ]},
-        {"-W-FAQ": [
+        ],
+        "-W-FAQ": [
             {"-P-In Generale": []},
             {"-P-Piano assunzioni": []},
             {"-P-Ufficiali ruolo normale": []},
@@ -5137,12 +5137,13 @@ araldica = {
             {"-P-Centro Sportivo Carabinieri": []},
             {"-P-I Musicanti della Banda dell'Arma": []},
             {"-P-Simulatore": []},
-        ]},
-        {"-P-Riserva Selezionata": []},
+        ],
+        "-P-Riserva Selezionata": [],
 }
 
+# Menu di navigazione
 'header-menu' = {
-    { "-W-Chi Siamo": [
+     "-W-Chi Siamo": [
         { "-W-Oggi": [
             { "-W-Organizzazione": [] },
             { "-W-Comandante Generale": [] },
@@ -5178,8 +5179,8 @@ araldica = {
             { "-W-Arte e Cultura": [] },
             { "-W-Il Carosello": [] }
         ] }
-    ] },
-    { "-W-In-Vostro-Aiuto": [
+    ] ,
+    "-W-In-Vostro-Aiuto": [
         { "-W-Servizi": [
             { "-P-Come fare per...": [] },
             { "-W-Denuncia Vi@ Web": [] },
@@ -5207,8 +5208,8 @@ araldica = {
             { "-W-Amministrazione Trasparente del Fondo Assistenza Previdenza e Premi Arma dei Carabinieri": [] },
             { "-W-Contratti pubblici": [] }
         ] }
-    ] },
-    { "-W-Media & Comunicazione": [
+    ] ,
+     "-W-Media & Comunicazione": [
         { "-W-Ente Editoriale": [
             { "-W-Il Carabiniere": [] },
             { "-W-#Natura": [] },
@@ -5246,38 +5247,38 @@ araldica = {
             { "-P-Numeri Unici": [] },
             { "-W-Cronache del Passato": [] }
         ] }
-    ] },
-    { "-W-Concorsi": [] },
+    ] ,
+     "-W-Concorsi": [] ,
 }
 
 'footer-menu' = {
-    { "-W-Arma": [
+     "-W-Arma": [
         { "-W-Organizzazione": [] },
         { "-W-Storia": [] }
-    ] },
-    { "-W-Collegamenti": [
+    ] ,
+     "-W-Collegamenti": [
         { "-W-Banche Dati": [] },
         { "-W-Contravvenzioni Online": [] },
         { "-W-Privacy Dashboard": [] },
         { "-W-Cuore da Carabiniere - Federfarma": [] },
         { "-W-Anafim": [] }
-    ] },
-    { "-W-Relazioni Sindacali": [
+    ] ,
+     "-W-Relazioni Sindacali": [
         { "-W-Comunicazioni": [] },
         { "-W-Elenco dei Locali": [] }
-    ] },
-    { "-W-Editoria": [
+    ] ,
+     "-W-Editoria": [
         { "-W-Ente Editoriale": [] },
         { "-W-Rassegna dell'Arma": [] },
         { "-W-Silvae": [] },
         { "-W-Calendario Storico": [] },
         { "-W-Notiziario Storico": [] }
-    ] },
-    { "-W-Accesso": [
+    ] ,
+    "-W-Accesso": [
         { "-W-Area Personale": [] }
-    ] },
-    { "-W-Sport": [
+    ] ,
+    "-W-Sport": [
         { "-W-Centro Sportivo CC": [] },
         { "-W-Gr. Paralimpico Difesa": [] }
-    ] }
+    ] 
 }
