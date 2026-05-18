@@ -5140,3 +5140,144 @@ araldica = {
         ]},
         {"-P-Riserva Selezionata": []},
 }
+
+'header-menu' = {
+    { "-W-Chi Siamo": [
+        { "-W-Oggi": [
+            { "-W-Organizzazione": [] },
+            { "-W-Comandante Generale": [] },
+            { "-W-Medagliere": [] },
+            { "-W-La Banda Musicale": [] },
+            { "-W-Virgo Fidelis": [] }
+        ] },
+        { "-W-Ieri": [
+            { "-W-Storia": [] },
+            { "-P-Direzione dei Beni Storici e Documentali": [] },
+            { "-P-Museo Storico": [] },
+            { "-P-Galleria fotografica": [] },
+            { "-W-Equipaggiamento e Materiali": [] },
+            { "-W-Mezzi": [] },
+            { "-W-Araldica": [] }
+        ] },
+        { "-W-Associazioni ed Enti": [
+            { "-W-ANC": [] },
+            { "-P-ONAOMAC": [] },
+            { "-P-FAPP": [] },
+            { "-P-Ente Editoriale per l'Arma dei Carabinieri": [] }
+        ] },
+        { "-W-Arma all'Estero": [
+            { "-P-Proiezione Internazionale": [] },
+            { "-P-Cooperazione Internazionale di Polizia": [] }
+        ] },
+        { "-W-Partners": [
+            { "-P-Il comparto sicurezza in Italia": [] },
+            { "-P-Osservatorio per la Sicurezza contro gli Atti Discriminatori (OSCAD)": [] },
+            { "-W-Soroptimist - una Stanza tutta per sé": [] }
+        ] },
+        { "-W-Curiosità": [
+            { "-W-Arte e Cultura": [] },
+            { "-W-Il Carosello": [] }
+        ] }
+    ] },
+    { "-W-In-Vostro-Aiuto": [
+        { "-W-Servizi": [
+            { "-P-Come fare per...": [] },
+            { "-W-Denuncia Vi@ Web": [] },
+            { "-W-Modulistica On-line": [] },
+            { "-P-Banche Dati": [] },
+            { "-P-Qualità dei Servizi": [] },
+            { "-P-Contravvenzioni On-Line": [] }
+        ] },
+        { "-W-Informazioni": [
+            { "-P-News": [] },
+            { "-P-Comunicati Stampa": [] },
+            { "-P-Appuntamenti": [] },
+            { "-P-Eventi": [] },
+            { "-W-Viabilità Italia": [] },
+            { "-W-U.R.P. (Ufficio Relazioni con il Pubblico)": [] }
+        ] },
+        { "-W-Consigli": [
+            { "-W-Codice Rosso": [] },
+            { "-P-Pillole di prevenzione": [] },
+            { "-P-Link utili": [] }
+        ] },
+        { "-P-Amministrazione Trasparente": [
+            { "-P-Amministrazione Trasparente Arma dei Carabinieri": [] },
+            { "-W-Amministrazione Trasparente Ente Editoriale Arma dei Carabinieri": [] },
+            { "-W-Amministrazione Trasparente del Fondo Assistenza Previdenza e Premi Arma dei Carabinieri": [] },
+            { "-W-Contratti pubblici": [] }
+        ] }
+    ] },
+    { "-W-Media & Comunicazione": [
+        { "-W-Ente Editoriale": [
+            { "-W-Il Carabiniere": [] },
+            { "-W-#Natura": [] },
+            { "-W-Negozio Virtuale": [] }
+        ] },
+        { "-W-Rassegna dell'Arma": [
+            { "-W-La Rassegna": [] },
+            { "-W-Numeri Speciali": [] },
+            { "-W-Edizioni Speciali": [] },
+            { "-P-Informazioni": [] }
+        ] },
+        { "-W-Podcast": [
+            { "-W-La cosa giusta (in collaborazione con ANSA)": [] },
+            { "-W-Pillole dell'Arma": [] },
+            { "-W-Storia dei Carabinieri": [] },
+            { "-W-Cara Repubblica (in collaborazione con Rai Radio)": [] },
+            { "-W-Voci dalla Rassegna": [] }
+        ] },
+        { "-W-Silvae": [
+            { "-W-La Rivista": [] },
+            { "-P-Informazioni": [] },
+            { "-W-Archivio": [] }
+        ] },
+        { "-W-Calendario Storico": [
+            { "-W-Il Calendario": [] }
+        ] },
+        { "-W-Notiziario Storico": [
+            { "-W-Il Notiziario": [] },
+            { "-W-Avviso inerente alla pubblicazione": [] },
+            { "-W-Modulo per la richiesta di pubblicazione articoli": [] }
+        ] },
+        { "-W-Pubblicazioni": [
+            { "-W-Francobolli": [] },
+            { "-W-Monete e Schede Telefoniche": [] },
+            { "-P-Numeri Unici": [] },
+            { "-W-Cronache del Passato": [] }
+        ] }
+    ] },
+    { "-W-Concorsi": [] },
+}
+
+'footer-menu' = {
+    { "-W-Arma": [
+        { "-W-Organizzazione": [] },
+        { "-W-Storia": [] }
+    ] },
+    { "-W-Collegamenti": [
+        { "-W-Banche Dati": [] },
+        { "-W-Contravvenzioni Online": [] },
+        { "-W-Privacy Dashboard": [] },
+        { "-W-Cuore da Carabiniere - Federfarma": [] },
+        { "-W-Anafim": [] }
+    ] },
+    { "-W-Relazioni Sindacali": [
+        { "-W-Comunicazioni": [] },
+        { "-W-Elenco dei Locali": [] }
+    ] },
+    { "-W-Editoria": [
+        { "-W-Ente Editoriale": [] },
+        { "-W-Rassegna dell'Arma": [] },
+        { "-W-Silvae": [] },
+        { "-W-Calendario Storico": [] },
+        { "-W-Notiziario Storico": [] }
+    ] },
+    { "-W-Accesso": [
+        { "-W-Area Personale": [] }
+    ] },
+    { "-W-Sport": [
+        { "-W-Centro Sportivo CC": [] },
+        { "-W-Gr. Paralimpico Difesa": [] }
+    ] }
+}
