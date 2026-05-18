@@ -62,19 +62,39 @@ def insert_file(file_path: str) -> dict | None:
         if files is None:
             print(f"Failed to deserialize file from path: {file_path}")
             return None
-        response = req.post(path, files=files, headers=headers, verify=ssl_verify)
-        response.raise_for_status()
-        file_id = response.json()[0]['id']
-        file_name = response.json()[0]['name']
-        print(f"File uploaded successfully con NAME: {file_name}")
-        return {'file_id':file_id, 'name': file_name}
+        if_exists = image_exists(files['files'][0])
+        if if_exists is None:
+            response = req.post(path, files=files, headers=headers, verify=ssl_verify)
+            response.raise_for_status()
+            file_id = response.json()[0]['id']
+            file_name = response.json()[0]['name']
+        else:
+            print(f"File already exists with name: {if_exists['name']} and ID: {if_exists['id']}")
+            file_id = None
+            file_name = None
+        return {'file_id':file_id if if_exists is None else if_exists['id'], 'name': file_name if if_exists is None else if_exists['name']}
     except req.RequestException as e:
         print(f"Error uploading file: {e}")
         if e.response is not None:
             print(f"  Status: {e.response.status_code}")
             print(f"  Body: {e.response.text}")
         return None
-    
+
+def image_exists(name: str) -> str | None:
+    path = strapi_url + "upload/files?filters[name][$eq]=" + name
+    headers = { 
+        'Authorization': 'Bearer ' + token
+    }
+    try:
+        response = req.get(path, headers=headers, verify=ssl_verify)
+        response.raise_for_status()
+        data = response.json()
+        if data:
+            return {'id': data[0]['id'], 'name': data[0]['name']}
+        return None
+    except req.RequestException as e:
+        print(f"Error checking image existence: {e}")
+        return None
 
 def deserialize_file(file_path: str) -> dict:
     """Deserializza un file da un percorso specificato.

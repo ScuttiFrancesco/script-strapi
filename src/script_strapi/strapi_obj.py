@@ -23,11 +23,15 @@ def parse_html_block(html_block, elemento: str) -> list:
 
 def parse_righe_tabella(url: str) -> list:
     """Parsa le righe di una tabella HTML e restituisce una lista di path estratti dagli href dei link presenti nelle righe."""
-    t_body = retrive_html_block(url, "tbody")
-    lista_path = []
-    for righe in parse_html_block(t_body, "tr"):
-        link = righe.find("a")
-        if link and link.has_attr('href'):
-            path = link['href']
-            lista_path.append(path)
-    return lista_path
+    try:
+        t_body = retrive_html_block(url, "tbody")
+        lista_path = []
+        for righe in parse_html_block(t_body, "tr"):
+            link = righe.find("a")
+            if link and link.has_attr('href'):
+                path = link['href']
+                lista_path.append(path)
+        return lista_path
+    except Exception as e:
+        print(f"Errore durante il parsing delle righe della tabella: {e}")
+        return []
