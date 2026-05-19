@@ -14,10 +14,14 @@ def get_data(slug: str) -> str | None:
     path = strapi_url + 'paginas?pLevel=2&filters[slug][$eq]=' + slug
     headers = {
         'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
     }
+    proxy = {
+        "http": os.getenv("HTTP_PROXY"),
+        "https": os.getenv("HTTPS_PROXY")    }
     try:
-        get_response = req.get(path, headers=headers, verify=ssl_verify)
+        get_response = req.get(path, headers=headers, verify=ssl_verify, proxies=proxy)
         get_response.raise_for_status()
         data = get_response.json()['data'][0]
         documentId = data['documentId']
@@ -44,4 +48,4 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
         put_response.raise_for_status()
         print(f"Data updated successfully for document ID: {documentId}")
     except req.RequestException as e:
-        print(f"Error updating data: {e.response.text}")
+        print(f"Error updating data: {e.response}")
