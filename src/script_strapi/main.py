@@ -12,8 +12,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+slug = "codice-rosso-1"
+
 def main() -> None:   
-    doc_bloc = get_data("cara-repubblica")
+    doc_bloc = get_data(slug)
     update_data(doc_bloc["documentId"], doc_bloc["blocco_centrale"], doc_bloc["spalla_destra"]) 
 
 if __name__ == "__main__":
