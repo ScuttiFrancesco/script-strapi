@@ -18,8 +18,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-document_id_padre = 'm27nsj2yfbzobjp8yr02fhpe'  
-mostraInMenu = ['header']
+document_id_padre = 'qesq7wuhlxfe04ynh0m7d9ab'  
+mostraInMenu = ['nessuno']
 
 def ciclo_ricorsivo(array: list, parent_id: str) -> None:
     for index, item in enumerate(array):
@@ -39,7 +39,7 @@ def ciclo_ricorsivo(array: list, parent_id: str) -> None:
 def main() -> None:   
         try:
             for index, pag in enumerate(lista.keys()):
-                strapi_object = vars(create_pagina_object(pag, (index + 1), document_id_padre, mostraInMenu))
+                strapi_object = vars(create_pagina_object(pag, ((index + 1) * 10), document_id_padre, mostraInMenu))
                 new_id = insert(collection_name, strapi_object)
                 if new_id:
                     logger.info(f"Pagina---->{pag} <----inserita con successo.")
