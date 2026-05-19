@@ -27,7 +27,6 @@ if collection_name not in sf:
     exit(1)
 
 def main() -> None:   
-    if collection_name != 'paginas': 
         df = deserialize_excel(collection_name)
         inseriti = 0
         falliti = 0
@@ -45,16 +44,6 @@ def main() -> None:
                     falliti += 1
                 time.sleep(1)
         logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
-    else:
-        try:
-            for index, pag in enumerate(lista):
-                strapi_object = vars(create_pagina_object(pag, index * 10))
-                if insert(collection_name, strapi_object):
-                    logger.info(f"Pagina---->${pag} <----inserita con successo.")
-                else:
-                    logger.error(f"******ATTENZIONE*******Errore durante l'inserimento della pagina---->${pag} <----.")
-        except Exception as e:
-            logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}")
 
 if __name__ == "__main__":
     main()
