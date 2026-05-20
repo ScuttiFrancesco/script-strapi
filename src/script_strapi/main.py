@@ -12,7 +12,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-slug = "codice-rosso-1"
+slug = "chi-e"
 
 def main() -> None:   
     doc_bloc = get_data(slug)

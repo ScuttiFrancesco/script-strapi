@@ -65,9 +65,8 @@ def find_and_replace(editor: str) -> str:
                 full_image_url = old_image_path
             new_image_id = insert_image(full_image_url)
             if new_image_id:
-                new_image_url = f"{strapi_url.replace('/api', '')}{new_image_id}"
-                print(f"Replacing with new image URL: {new_image_url}")
-                editor = editor.replace(old_image_path, new_image_url)
+                print(f"Replacing with new image URL: {new_image_id}")
+                editor = editor.replace(old_image_path, new_image_id)
             
     return editor
 
@@ -105,14 +104,24 @@ def insert_image(image_path: str) -> str | None:
         old_image_url = image_exists(files['files'][0])
         if old_image_url:
             print(f"Image already exists in Strapi. Using existing URL: {old_image_url}")
-            return old_image_url
+            if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in old_image_url:
+                print(f"Unexpected existing image URL format: {old_image_url}. Returning as is.")
+                return old_image_url.replace('https://portaleweb.servizi.arma.carabinieri.it/cms/', '')
+            if 'https://www.armacc-prod-portale.local' in old_image_url:
+                print(f"Unexpected existing image URL format: {old_image_url}. Returning as is.")
+                return old_image_url.replace('https://www.armacc-prod-portale.local', '')            
         else:
             response = req.post(path, files=files, headers=headers, verify=ssl_verify)
             response.raise_for_status()
             image_id = response.json()[0]['id']
             image_path = response.json()[0]['url']
             print(f"Image uploaded successfully. Image ID: {image_id} URL: {strapi_url.replace('/api', '')}{image_path}")
-            return image_path
+            if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in image_path:
+                print(f"Unexpected existing image URL format: {image_path}. Returning as is.")
+                return image_path.replace('https://portaleweb.servizi.arma.carabinieri.it/cms/', '')
+            if 'https://www.armacc-prod-portale.local' in image_path:
+                print(f"Unexpected existing image URL format: {image_path}. Returning as is.")
+                return image_path.replace('https://www.armacc-prod-portale.local', '')
     except req.RequestException as e:
         print(f"Error uploading image: {e}")
         if e.response is not None:
