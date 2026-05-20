@@ -10,7 +10,7 @@ strapi_fields = {
     'contattis': {'title': str, "telefono": str, 'sede': str, 'postaElettronicaCertificata': str, 'fax': str, 'email': str, 'publicationDate': str},
     'entis': {'title': str, 'filePrimoTrimestre': str, 'fileSecondoTrimestre': str, 'fileTerzoTrimestre': str, 'fileQuartoTrimestre': str, 'publicationDate': str},
     'appuntamentis': {'title': str, 'contenuto': str, 'comune': str, 'dataInizio': str, 'dataFine': str, 'ignoraDataFine': bool, 'publicationDate': str},
-    'comunicati-stampas': {'title': str, 'comune': str, 'fontePrefisso': str, 'fonte': str, 'contenuto': str, 'scadenzaAutomatica': bool, 'publicationDate': str},
+    'comunicati-stampas': {'title': str, 'comune': str, 'fontePrefisso': str, 'fonte': str, 'contenuto': str, 'scadenzaAutomatica': bool, 'publicationDate': str, 'regione': str},
     'amministrazione-trasparente-incarichi-dirigenzialis': { 'incarico': str, 'cognome': str, 'nome': str, 'compensiIncarico': str, 'indennita': str, 'rimborsi': str, 'emolumenti': str, 'grado': str, 'publicationDate': str},
     # VERIFICARE SE VIENE PASSATO IL CAMPO SLUG E IN CASO AGGIUNGERLO
     'gare-appaltos': {'title': str, 'anno': int, 'codiceCig': str, 'codiceUnivoco': str, 'idGara': str, 'dataInizio': str, 'dataScadenza': str, 'statoPostScadenza': str, 'descrizione': str, 'enteAppaltante': str, 
