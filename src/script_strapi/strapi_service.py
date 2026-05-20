@@ -105,11 +105,10 @@ def insert_image(image_path: str) -> str | None:
         if old_image_url:
             print(f"Image already exists in Strapi. Using existing URL: {old_image_url}")
             if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in old_image_url:
-                print(f"Unexpected existing image URL format: {old_image_url}. Returning as is.")
-                return old_image_url.replace('https://portaleweb.servizi.arma.carabinieri.it/cms/', '')
+                return old_image_url.replace('https://portaleweb.servizi.arma.carabinieri.it/cms', '')
             if 'https://www.armacc-prod-portale.local' in old_image_url:
-                print(f"Unexpected existing image URL format: {old_image_url}. Returning as is.")
-                return old_image_url.replace('https://www.armacc-prod-portale.local', '')            
+                return old_image_url.replace('https://www.armacc-prod-portale.local', '')
+            return old_image_url
         else:
             response = req.post(path, files=files, headers=headers, verify=ssl_verify)
             response.raise_for_status()
@@ -117,11 +116,10 @@ def insert_image(image_path: str) -> str | None:
             image_path = response.json()[0]['url']
             print(f"Image uploaded successfully. Image ID: {image_id} URL: {strapi_url.replace('/api', '')}{image_path}")
             if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in image_path:
-                print(f"Unexpected existing image URL format: {image_path}. Returning as is.")
-                return image_path.replace('https://portaleweb.servizi.arma.carabinieri.it/cms/', '')
+                return image_path.replace('https://portaleweb.servizi.arma.carabinieri.it/cms', '')
             if 'https://www.armacc-prod-portale.local' in image_path:
-                print(f"Unexpected existing image URL format: {image_path}. Returning as is.")
                 return image_path.replace('https://www.armacc-prod-portale.local', '')
+            return image_path
     except req.RequestException as e:
         print(f"Error uploading image: {e}")
         if e.response is not None:
