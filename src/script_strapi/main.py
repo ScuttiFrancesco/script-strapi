@@ -18,7 +18,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-document_id_padre = 'qesq7wuhlxfe04ynh0m7d9ab'  
+document_id_padre = 'stmx53p5xclubsbg0y1prpf8'  
 mostraInMenu = ['nessuno']
 
 def ciclo_ricorsivo(array: list, parent_id: str) -> None:
@@ -26,7 +26,7 @@ def ciclo_ricorsivo(array: list, parent_id: str) -> None:
         # item è {"-P-Titolo": [...figli...]}
         title = list(item.keys())[0]
         children = item[title]
-        strapi_object = vars(create_pagina_object(title, (index + 1), parent_id, mostraInMenu))
+        strapi_object = vars(create_pagina_object(title, ((index + 1) * 10), parent_id, mostraInMenu))
         new_id = insert(collection_name, strapi_object)
         if new_id:
             logger.info(f"Pagina---->{title} <----inserita con successo.")
