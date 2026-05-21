@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
 url = 'https://www.carabinieri.it/CHI-SIAMO/ieri/storia/storia'
-slug = 'la-super-storia'
+slug = 'storia'
 
 def main() -> None:   
         try:
@@ -27,6 +27,7 @@ def main() -> None:
             blocco_centrale = centro_spalla['blocco_centrale']
             spalla_destra = centro_spalla['spalla_destra']
             update_data(document_id, blocco_centrale, spalla_destra)
+            scrivi_report_excel(url.replace("https://www.carabinieri.it/", "").replace("/" + slug, ""), url, slug)
         except Exception as e:
             logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}")
 

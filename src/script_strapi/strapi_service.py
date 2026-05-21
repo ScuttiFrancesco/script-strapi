@@ -2,7 +2,11 @@ import requests as req
 import os
 from dotenv import load_dotenv
 import urllib3
+from openpyxl import load_workbook, Workbook
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+FILE_EXCEL_REPORT = os.getenv("FILE_EXCEL_REPORT", "report_migrazione.xlsx")
 
 load_dotenv()
 
@@ -49,3 +53,20 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
         print(f"Data updated successfully for document ID: {documentId}")
     except req.RequestException as e:
         print(f"Error updating data: {e.response}")
+
+# Funzione per scrivere un report su Excel con i dettagli della migrazione
+def scrivi_report_excel(sezione: str, url: str, slug: str) -> None:
+    try:
+        if not os.path.exists(FILE_EXCEL_REPORT):
+            workbook = Workbook()
+            sheet = workbook.active
+            sheet.title = "Report Migrazione"
+            sheet.append(["DATA", "SEZIONE", "SLUG", "URL", "ESITO", "NOTE"])
+            workbook.save(FILE_EXCEL_REPORT)
+        workbook = load_workbook(FILE_EXCEL_REPORT)
+        sheet = workbook['Report Migrazione']
+        sheet.append(["", sezione, slug, url, "", ""])
+
+        workbook.save(FILE_EXCEL_REPORT)
+    except Exception as e:
+        print(f"Error writing to Excel report: {e}")
