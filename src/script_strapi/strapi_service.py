@@ -6,7 +6,7 @@ from openpyxl import load_workbook, Workbook
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-FILE_EXCEL_REPORT = os.getenv("FILE_EXCEL_REPORT", "report_migrazione.xlsx")
+FILE_EXCEL_REPORT = os.getenv("FILE_EXCEL_REPORT", r"C:\Users\francesco.scutti\Desktop\report_migrazione.xlsx")
 
 load_dotenv()
 
