@@ -49,6 +49,8 @@ def handle_contenuto(blocco_centrale: list) -> list:
 
 # Funzione per trovare e sostituire i vecchi URL delle immagini con i nuovi URL restituiti da Strapi
 def find_and_replace(editor: str) -> str:
+    if not editor:
+        return editor
     editor_list = editor.split('<img ')
   
     for i, img_tag in enumerate(editor_list):
