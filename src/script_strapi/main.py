@@ -17,8 +17,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-url = 'https://www.carabinieri.it/CHI-SIAMO/ieri/storia/storia'
-slug = 'storia'
+url = ""
+slug = ""
 
 def main() -> None:   
         try:
