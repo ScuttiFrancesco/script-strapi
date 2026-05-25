@@ -16,6 +16,12 @@ slug = ""
 
 def main() -> None:   
     doc_bloc = get_data(slug)
+    if not doc_bloc:
+        logger.error("Impossibile recuperare i dati da Strapi. Aggiornamento annullato.")
+        return
+    if not doc_bloc["blocco_centrale"] and not doc_bloc["spalla_destra"]:
+        logger.error("Contenuto Strapi vuoto (probabilmente il retrieve URL non ha salvato correttamente). Aggiornamento annullato.")
+        return
     update_data(doc_bloc["documentId"], doc_bloc["blocco_centrale"], doc_bloc["spalla_destra"]) 
 
 if __name__ == "__main__":
