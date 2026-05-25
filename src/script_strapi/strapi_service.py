@@ -41,14 +41,42 @@ def get_data(slug: str) -> str | None:
         return None
 
 # Funzione helper che collega il recupero da Strapi e la sostituzione degli URL delle immagini all'interno del blocco centrale
-def handle_contenuto(blocco_centrale: list) -> list:
-    for blocco in blocco_centrale:
+def handle_contenuto(blocchi: list) -> list:
+    for blocco in blocchi:
         if blocco['__component'] == 'shared.contenuto':
-            blocco['editor'] = find_and_replace(blocco['editor'])
-    return blocco_centrale
+            blocco['editor'] = find_and_replace_img(blocco['editor'])
+            blocco['editor'] = find_and_replace_a(blocco['editor'])
+    return blocchi
+
+# Funzione per trovare e sostituire i vecchi URL dei link con i nuovi URL restituiti da Strapi
+def find_and_replace_a(editor: str) -> str:
+    if not editor:
+        return editor
+    editor_list = editor.split('<a ')
+  
+    for i, a_tag in enumerate(editor_list):
+        print(f"Processing editor segment: {i}")
+        if "href=\"" in a_tag:
+            start_index = a_tag.index("href=\"") + len("href=\"")
+            end_index = a_tag.index("\"", start_index)
+            old_link_path = a_tag[start_index:end_index]
+            print(f"Found link path: {old_link_path}")
+
+            if old_link_path.startswith(("www.", "https://", "http://")):
+                print(f"Skipping external link: {old_link_path}")
+                continue
+            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images")):
+                print(f"Skipping non-document/image link: {old_link_path}")
+                continue
+            full_link_url = image_source_base_url.rstrip("/") + old_link_path
+            new_link_url = insert_image(full_link_url)
+            if new_link_url:
+                print(f"Replacing with new link URL: {new_link_url}")
+                editor = editor.replace(old_link_path, new_link_url)            
+    return editor
 
 # Funzione per trovare e sostituire i vecchi URL delle immagini con i nuovi URL restituiti da Strapi
-def find_and_replace(editor: str) -> str:
+def find_and_replace_img(editor: str) -> str:
     if not editor:
         return editor
     editor_list = editor.split('<img ')
@@ -68,8 +96,7 @@ def find_and_replace(editor: str) -> str:
             new_image_id = insert_image(full_image_url)
             if new_image_id:
                 print(f"Replacing with new image URL: {new_image_id}")
-                editor = editor.replace(old_image_path, new_image_id)
-            
+                editor = editor.replace(old_image_path, new_image_id)            
     return editor
 
 # Chiamata PUT verso Strapi per aggiornare il blocco centrale con i nuovi URL delle immagini
