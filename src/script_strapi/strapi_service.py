@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 import random
 import urllib3
-from deserialize_image import deserialize_image
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 load_dotenv()
@@ -44,7 +43,6 @@ def get_data(slug: str) -> str | None:
 def handle_contenuto(blocchi: list) -> list:
     for blocco in blocchi:
         if blocco['__component'] == 'shared.contenuto':
-            blocco['editor'] = find_and_replace_img(blocco['editor'])
             blocco['editor'] = find_and_replace_a(blocco['editor'])
     return blocchi
 
@@ -62,41 +60,17 @@ def find_and_replace_a(editor: str) -> str:
             old_link_path = a_tag[start_index:end_index]
             print(f"Found link path: {old_link_path}")
 
-            if old_link_path.startswith(("www.", "https://", "http://")):
-                print(f"Skipping external link: {old_link_path}")
-                continue
-            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images")):
-                print(f"Skipping non-document/image link: {old_link_path}")
-                continue
-            full_link_url = image_source_base_url.rstrip("/") + old_link_path
-            new_link_url = insert_image(full_link_url)
+            filename = old_link_path.split('/')[-1]
+            new_link_url = file_exists(filename)
             if new_link_url:
+                if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in new_link_url:
+                    new_link_url = new_link_url.replace('https://portaleweb.servizi.arma.carabinieri.it/cms', '')
+                if 'https://www.armacc-prod-portale.local' in new_link_url:
+                    new_link_url = new_link_url.replace('https://www.armacc-prod-portale.local', '')
                 print(f"Replacing with new link URL: {new_link_url}")
-                editor = editor.replace(old_link_path, new_link_url)            
-    return editor
-
-# Funzione per trovare e sostituire i vecchi URL delle immagini con i nuovi URL restituiti da Strapi
-def find_and_replace_img(editor: str) -> str:
-    if not editor:
-        return editor
-    editor_list = editor.split('<img ')
-  
-    for i, img_tag in enumerate(editor_list):
-        print(f"Processing editor segment: {i}")
-        if "src=\"" in img_tag:
-            start_index = img_tag.index("src=\"") + len("src=\"")
-            end_index = img_tag.index("\"", start_index)
-            old_image_path = img_tag[start_index:end_index]
-            print(f"Found image path: {old_image_path}")
-
-            if old_image_path.startswith("/"):
-                full_image_url = image_source_base_url.rstrip("/") + old_image_path
+                editor = editor.replace(old_link_path, new_link_url)
             else:
-                full_image_url = old_image_path
-            new_image_id = insert_image(full_image_url)
-            if new_image_id:
-                print(f"Replacing with new image URL: {new_image_id}")
-                editor = editor.replace(old_image_path, new_image_id)            
+                print(f"File not found in Strapi: {filename}")
     return editor
 
 # Chiamata PUT verso Strapi per aggiornare il blocco centrale con i nuovi URL delle immagini
@@ -119,44 +93,8 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
     except req.RequestException as e:
         print(f"Error updating data: {e.response.text}")
 
-# Chiamata POST verso Strapi per caricare una nuova immagine e ottenere il nuovo URL da inserire nel blocco centrale    
-def insert_image(image_path: str) -> str | None:
-    path = strapi_url + "upload"
-    headers = {
-        'Authorization': 'Bearer ' + token
-    }
-    try:
-        files = deserialize_image(image_path)
-        if files is None:
-            print(f"Failed to deserialize image from path: {image_path}")
-            return None
-        old_image_url = image_exists(files['files'][0])
-        if old_image_url:
-            print(f"Image already exists in Strapi. Using existing URL: {old_image_url}")
-            if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in old_image_url:
-                return old_image_url.replace('https://portaleweb.servizi.arma.carabinieri.it/cms', '')
-            if 'https://www.armacc-prod-portale.local' in old_image_url:
-                return old_image_url.replace('https://www.armacc-prod-portale.local', '')
-            return old_image_url
-        else:
-            response = req.post(path, files=files, headers=headers, verify=ssl_verify)
-            response.raise_for_status()
-            image_id = response.json()[0]['id']
-            image_path = response.json()[0]['url']
-            print(f"Image uploaded successfully. Image ID: {image_id} URL: {strapi_url.replace('/api', '')}{image_path}")
-            if 'https://portaleweb.servizi.arma.carabinieri.it/cms' in image_path:
-                return image_path.replace('https://portaleweb.servizi.arma.carabinieri.it/cms', '')
-            if 'https://www.armacc-prod-portale.local' in image_path:
-                return image_path.replace('https://www.armacc-prod-portale.local', '')
-            return image_path
-    except req.RequestException as e:
-        print(f"Error uploading image: {e}")
-        if e.response is not None:
-            print(f"  Status: {e.response.status_code}")
-            print(f"  Body: {e.response.text}")
-        return None
     
-def image_exists(name: str) -> str | None:
+def file_exists(name: str) -> str | None:
     path = strapi_url + "upload/files?filters[name][$eq]=" + name
     headers = { 
         'Authorization': 'Bearer ' + token

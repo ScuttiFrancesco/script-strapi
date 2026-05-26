@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-slug = "anafim"
+slug = "la-cosa-giusta"
 
 MAX_RETRIES = 5
 RETRY_DELAY = 10  # secondi
