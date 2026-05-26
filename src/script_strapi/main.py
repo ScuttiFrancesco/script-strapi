@@ -17,8 +17,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-url = ""
-slug = ""
+url = "https://www.carabinieri.it/atti-di-notifica"
+slug = "atti-di-notifica"
 
 def main() -> None:   
         try:
@@ -26,6 +26,9 @@ def main() -> None:
             centro_spalla = create_pagina_object(url)
             blocco_centrale = centro_spalla['blocco_centrale']
             spalla_destra = centro_spalla['spalla_destra']
+            if not blocco_centrale:
+                logger.error("Scraping fallito: blocco_centrale vuoto. Aggiornamento Strapi annullato per evitare sovrascrittura.")
+                return
             update_data(document_id, blocco_centrale, spalla_destra)
             scrivi_report_excel(url.replace("https://www.carabinieri.it/", "").replace("/" + slug, ""), url, slug)
         except Exception as e:
