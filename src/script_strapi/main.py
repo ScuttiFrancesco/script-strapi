@@ -9,7 +9,7 @@ import os
 import time
 from strapi_fields import strapi_fields as sf
 from dotenv import load_dotenv
-from strapi_service import insert
+from strapi_service import insert, replace_and_update, retrieve_data
 from deserialize_excel import deserialize_excel, create_strapi_object
 from strapi_obj import *
 
@@ -27,7 +27,7 @@ if collection_name not in sf:
     exit(1)
 
 def main() -> None:   
-        df = deserialize_excel(collection_name)
+       """  df = deserialize_excel(collection_name)
         inseriti = 0
         falliti = 0
 
@@ -44,6 +44,10 @@ def main() -> None:
                     falliti += 1
                 time.sleep(1)
         logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
-
+    """
+       retrieved_data = retrieve_data(collection_name, "media-e-comunicazione/rassegna-dellarma/la-rassegna")
+       for item in retrieved_data:
+           replace_and_update(collection_name, item['documentId'], item, "media---comunicazione/rassegna-dell-arma", "media-e-comunicazione/rassegna-dellarma")
+       
 if __name__ == "__main__":
     main()
