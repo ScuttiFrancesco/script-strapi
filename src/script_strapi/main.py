@@ -45,9 +45,9 @@ def main() -> None:
                 time.sleep(1)
         logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
     """
-       retrieved_data = retrieve_data(collection_name, "media-e-comunicazione/rassegna-dellarma/la-rassegna")
+       retrieved_data = retrieve_data(collection_name, "media-e-comunicazione/rassegna-dellarma/la-rassegna/anno-2016")
        for item in retrieved_data:
-           replace_and_update(collection_name, item['documentId'], item, "media---comunicazione/rassegna-dell-arma", "media-e-comunicazione/rassegna-dellarma")
-       
+           replace_and_update(collection_name, item['documentId'], item)
+           
 if __name__ == "__main__":
     main()

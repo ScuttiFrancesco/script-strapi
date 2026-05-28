@@ -42,7 +42,7 @@ def retrieve_data(collection_name: str, section: str) -> list:
         print(f"Error retrieving data from {collection_name}: {e.response.text}")
         return []
     
-def replace_and_update(collection_name: str, id: int, data: dict, old: str, new: str) -> bool:
+def replace_and_update(collection_name: str, id: int, data: dict) -> bool:
     path = strapi_url + collection_name + f'/{id}'
     headers = {
         'Authorization': 'Bearer ' + token,
@@ -55,14 +55,16 @@ def replace_and_update(collection_name: str, id: int, data: dict, old: str, new:
                 if 'id' in contenuto:
                     del contenuto['id']
                 if contenuto['__component'] == 'shared.contenuto':
-                    contenuto['editor'] = replace(contenuto['editor'], old, new)
+                    contenuto['editor'] = replace(contenuto['editor'], "/media---comunicazione/", "/media-e-comunicazione/")
+                    contenuto['editor'] = replace(contenuto['editor'], "/rassegna-dell-arma/", "/rassegna-dellarma/")
         spalla_destra = data.get("spalla_destra", [])
         if len(spalla_destra) > 0 :
             for contenuto in spalla_destra:
                 if 'id' in contenuto:
                     del contenuto['id']
                 if contenuto['__component'] == 'shared.contenuto':
-                    contenuto['editor'] = replace(contenuto['editor'], old, new)
+                    contenuto['editor'] = replace(contenuto['editor'], "/media---comunicazione/", "/media-e-comunicazione/")
+                    contenuto['editor'] = replace(contenuto['editor'], "/rassegna-dell-arma/", "/rassegna-dellarma/")
         data["blocco_centrale"] = blocco_centrale
         data["spalla_destra"] = spalla_destra
         if 'id' in data:
