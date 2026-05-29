@@ -17,5 +17,9 @@ strapi_fields = {
                       'oggettoProcedura': str, 'sceltaContraente': str, 'protocollo': str, 'fonte': str, 'fonteLista': str, 'listaLink': str, 'numero': int, 'importo': float, 'publicationDate': str},
     'ordini-giornos': {'title': str, 'comune': str, 'publicationDate': str},
     'amministrazione-trasparente-incarichi-conferitis': {'unitaAmministrativa': str, 'annoRiferimento': str, 'cognome': str, 'nome': str, 'qualifica': str, 'denominazioneSoggettoConferente': str, 'oggettoIncarico': str, 'dataInizio': str, 'dataFine': str, 'tipologiaIncarico': str, 'compenso': str, 'publicationDate': str},
-    'paginas': {'title': str, 'ordineVisualizzazioneMenu': int, 'tipoLayout': str, 'pagina': dict}
+    'paginas': {'title': str, 'ordineVisualizzazioneMenu': int, 'tipoLayout': str, 'pagina': dict},
+    'concorsis':{'numero': int, 'titolo': str, 'stato': str,'dataInizio': str, 'dataScadenzaDomanda': str, 'ruolo': str, 'mostraBoxPrenotaOnline': bool, 'tipologia': str, 'posti': str, 'sottotitolo': str, 'codiceConcorso': str, 'descrizione': str, 'listaLink': str, 'publicationDate': str},
+    'concorso-provas':{'titoloProva': str, 'concorsis': dict, 'attivo': bool, 'azioneLink': str, 'descrizione': str, 'idGraduatoria': int},
+    'concorso-novitas':{'titoloNovita': str, 'concorsis': dict, 'testo': str},
+    'concorso-pubblico-proclamas':{'title': str, 'concorsis': dict,},
 }

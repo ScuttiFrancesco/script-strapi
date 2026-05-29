@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import time
+from deserialize_excel_concorsi import create_strapi_object_concorsi, deserialize_excel_concorsi
 from strapi_fields import strapi_fields as sf
 from dotenv import load_dotenv
 from strapi_service import insert, replace_and_update, retrieve_data
@@ -26,8 +27,24 @@ if collection_name not in sf:
     print("Nome della collection non valido.")
     exit(1)
 
-def main() -> None:   
-        df = deserialize_excel(collection_name)
+def main() -> None:
+        #inserimento concorsi da file Excel
+        df = deserialize_excel_concorsi(collection_name)
+        #print(json.dumps(df.to_dict(orient='records'), indent=4, ensure_ascii=False))
+        if df is not None:
+            for dict in df.iloc:
+                try:
+                    strapi_object = create_strapi_object_concorsi(collection_name, dict.to_dict())
+                    if strapi_object is not None:
+                        print(json.dumps(strapi_object, indent=4, ensure_ascii=False))
+                    else:
+                        logger.info(f"Record saltato per tipo oggetto figlio 'Prova': {dict.get('title', 'N/A')}")
+                except Exception as e:
+                    logger.warning(f"Record saltato per errore: {e}")
+                time.sleep(2)
+
+        #inserimento dei dati da file Excel   
+        """ df = deserialize_excel(collection_name)
         inseriti = 0
         falliti = 0
 
@@ -43,8 +60,9 @@ def main() -> None:
                     logger.warning(f"Record saltato per errore: {e}")
                     falliti += 1
                 time.sleep(2)
-        logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
+        logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}") """
    
+        # per sostituire parti di path all interno dei blocchi html
         """ retrieved_data = retrieve_data(collection_name, "media-e-comunicazione/rassegna-dellarma/la-rassegna/anno-2016")
            for item in retrieved_data:
            replace_and_update(collection_name, item['documentId'], item) """
