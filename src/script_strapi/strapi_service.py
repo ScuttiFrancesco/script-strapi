@@ -12,6 +12,10 @@ load_dotenv()
 token = os.getenv("STRAPI_API_TOKEN", "")
 strapi_url = os.getenv("STRAPI_BASE_URL", "")
 ssl_verify = os.getenv("STRAPI_SSL_VERIFY", "false").lower() == "true"
+proxies = {
+    "http": "socks5h://127.0.0.1:1080",
+    "https": "socks5h://127.0.0.1:1080"
+    }
 
 def insert(collection_name: str, data: dict) :
     path = strapi_url + collection_name
@@ -19,8 +23,9 @@ def insert(collection_name: str, data: dict) :
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
     }
+
     try:
-        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify)
+        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
         response.raise_for_status()
         print(f"Data inserted successfully")
         return True
@@ -34,6 +39,7 @@ def retrieve_data(collection_name: str, section: str) -> list:
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
     }
+
     try:
         response = req.get(path, headers=headers, verify=ssl_verify)
         response.raise_for_status()
