@@ -17,11 +17,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-url = "https://www.carabinieri.it/atti-di-notifica"
+url = "https://www.carabinieri.it/concorsi/area-concorsi/calendario-concorsi/concorsointernoruolonormaleufficiali43postIriservatoailgt14postiespsovrappecar29posti"
 slug = "atti-di-notifica"
 
 def main() -> None:   
-        try:
+        # recupera html e inserisce su strapi
+        """ try:
             document_id = get_data(slug)
             centro_spalla = create_pagina_object(url)
             blocco_centrale = centro_spalla['blocco_centrale']
@@ -32,7 +33,58 @@ def main() -> None:
             update_data(document_id, blocco_centrale, spalla_destra)
             scrivi_report_excel(url.replace("https://www.carabinieri.it/", "").replace("/" + slug, ""), url, slug)
         except Exception as e:
-            logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}")
+            logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}") """
+        
+        #recupera html concorso e associa i cod
+        try:
+            document_id = 'y7lnxy37b2azfb1fbojg0qw9'
+            bando_ids = []
+            annullamento_ids = []
+            documentiCorrelati_ids = []
+            normeTecniche_ids = []
+            avvisi_ids = []
+            esiti_ids = []
+            spalla_destra = retrive_html_block(url, "docboxRight")
+            docs = parse_html_block(spalla_destra, 'div', 'docAllegati')
+
+            # estrai il folder path dal primo href disponibile e carica la mappa dei doc
+            doc_map = {}
+            for blocco in docs:
+                tag_a = blocco.find('a')
+                if tag_a and 'href' in tag_a.attrs:
+                    first_url = tag_a['href'].replace('https://www.carabinieri.it/docs/default-source', '/docs/uploads').split('?')[0]
+                    folder_path = '/'.join(first_url.split('/')[:-1])
+                    doc_map = get_docs_in_folder(folder_path)
+                    break
+
+            for blocco in docs:
+                tipo_doc = blocco.find('span', class_='TitoloListaAllegati')
+                for tag_a in blocco.find_all('a'):
+                    if 'href' not in tag_a.attrs:
+                        continue
+                    normalized_url = tag_a['href'].replace('https://www.carabinieri.it/docs/default-source', '/docs/uploads').split('?')[0]
+                    doc_id = find_doc_id_in_map(doc_map, normalized_url)
+                    if doc_id is None:
+                        continue
+
+                    match tipo_doc.text.strip():
+                        case "Bando di concorso":
+                            bando_ids.append(doc_id)
+                        case "Annullamento":
+                            annullamento_ids.append(doc_id)
+                        case "Documenti Correlati":
+                            documentiCorrelati_ids.append(doc_id)
+                        case "Norme Tecniche":
+                            normeTecniche_ids.append(doc_id)
+                        case "Avvisi":
+                            avvisi_ids.append(doc_id)
+                        case "Esiti":
+                            esiti_ids.append(doc_id)
+
+            print(document_id, bando_ids, annullamento_ids, documentiCorrelati_ids, normeTecniche_ids, avvisi_ids, esiti_ids)
+            update_concorso(document_id, bando_ids, annullamento_ids, documentiCorrelati_ids, normeTecniche_ids, avvisi_ids, esiti_ids)
+        except Exception as e:
+            logger.error(f"Errore durante l'associazione dei codici al concorso: {e}") 
 
 if __name__ == "__main__":
     main()

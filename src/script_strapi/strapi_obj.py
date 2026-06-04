@@ -14,11 +14,11 @@ def retrive_html_block(url:str, class_name: str) -> str:
         print(f"Errore durante il recupero dei blocchi HTML: {e}")
         return ''
 
-def parse_html_block(html_block) -> list:
+def parse_html_block(html_block, element: str, class_name: str) -> list:
     """Parsa i blocchi HTML e restituisce una lista di dizionari con titolo e figli."""
     if not html_block:
         return []
-    return html_block.find_all('div', class_='sfContentBlock')
+    return html_block.find_all(element, class_=class_name)
 
 
 def create_pagina_object(url: str) -> dict:
@@ -27,12 +27,12 @@ def create_pagina_object(url: str) -> dict:
     spalla_destra = []
     centrale = retrive_html_block(url, "docContenitore")
     destra = retrive_html_block(url, "docboxRight")
-    for centro in parse_html_block(centrale):
+    for centro in parse_html_block(centrale, 'div', 'sfContentBlock'):
         blocco_centrale.append({
             '__component': 'shared.contenuto',
             'editor': str(centro)
         })
-    for destra_item in parse_html_block(destra):
+    for destra_item in parse_html_block(destra, 'div', 'sfContentBlock'):
         spalla_destra.append({
             '__component': 'shared.contenuto',
             'editor': str(destra_item)
