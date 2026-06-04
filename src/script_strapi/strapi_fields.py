@@ -21,5 +21,5 @@ strapi_fields = {
     'concorsis':{'numero': int, 'titolo': str, 'stato': str,'dataInizio': str, 'dataScadenzaDomanda': str, 'ruolo': str, 'mostraBoxPrenotaOnline': bool, 'tipologia': str, 'posti': str, 'sottotitolo': str, 'codiceConcorso': str, 'descrizione': str, 'listaLink': str, 'publicationDate': str},
     'concorso-provas':{'titoloProva': str, 'concorsis': dict, 'attivo': bool, 'azioneLink': str, 'descrizione': str, 'idGraduatoria': int},
     'concorso-novitas':{'titoloNovita': str, 'concorsis': dict, 'testo': str},
-    'concorso-pubblico-proclamas':{'title': str, 'concorsis': dict,},
+    'concorso-pubblico-proclamas':{'titoloProclamo': str, 'concorsis': dict,},
 }

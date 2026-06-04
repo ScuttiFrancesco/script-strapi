@@ -24,16 +24,24 @@ def create_strapi_object_concorsi(collection_name: str, data: dict):
     """Crea un oggetto Strapi a partire da un dizionario."""
     if data['tipoOggettoFiglio'] == 'Prova' and collection_name != 'concorso-provas':
         return
+    if data['tipoOggettoFiglio'] == 'Novità' and collection_name != 'concorso-novitas':
+        return
+    if data['tipoOggettoFiglio'] == 'Pubblico Proclama' and collection_name != 'concorso-pubblico-proclamas':
+        return
     strapi_object = dict()
     for key in sf[collection_name].keys(): 
-                if key == 'titoloProva' or key == 'titoloNovita':
+                if key == 'titoloProva' or key == 'titoloNovita' or key == 'titoloProclamo':
                     strapi_object['title'] = fields_validation_concorsi(key, collection_name, data[key])
+                elif key == 'azioneLink':
+                    strapi_object['azioneLink'] = fields_validation_concorsi(key, collection_name, data[key])
                 else:           
                     strapi_object[key] = fields_validation_concorsi(key, collection_name, data[key])
     return strapi_object
 
 def fields_validation_concorsi(field : str, collection_name: str, value) :
     """Valida un campo in base allo schema Strapi."""
+    if field == 'azioneLink':
+        return azione_link_mapping(value)
     field_type = sf[collection_name].get(field)
     if field_type is not None:
         if pd.isna(value) or value == '' or value == 'NULL' or value == 'null':
@@ -69,5 +77,17 @@ def create_strapi_relation_concorsi(documentId: str):
         return pagina
     else:
         raise ValueError(f"errore nella creazione della relazione, documentId non valido: {documentId}")
+
+def azione_link_mapping(azione: int) -> str:
+    mapping = {
+        1: "nessuna",
+        2: "concorsi-online",
+        3: "apri-pdf",
+        4: "database",
+        5: "simulatore",
+        6: "simulatore-vecchio",
+        7: "concorsi-online-vecchio"
+    }
+    return mapping.get(azione, "Azione non valida")
     
     

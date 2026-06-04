@@ -25,7 +25,7 @@ def insert(collection_name: str, data: dict) :
     }
 
     try:
-        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
+        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify)
         response.raise_for_status()
         print(f"Data inserted successfully")
         return True

@@ -29,22 +29,21 @@ if collection_name not in sf:
 
 def main() -> None:
         #inserimento concorsi da file Excel
-        df = deserialize_excel_concorsi(collection_name)
-        #print(json.dumps(df.to_dict(orient='records'), indent=4, ensure_ascii=False))
+        """  df = deserialize_excel_concorsi(collection_name)
         if df is not None:
             for dict in df.iloc:
                 try:
                     strapi_object = create_strapi_object_concorsi(collection_name, dict.to_dict())
                     if strapi_object is not None:
-                        print(json.dumps(strapi_object, indent=4, ensure_ascii=False))
+                        insert(collection_name, strapi_object)
                     else:
                         logger.info(f"Record saltato per tipo oggetto figlio 'Prova': {dict.get('title', 'N/A')}")
                 except Exception as e:
                     logger.warning(f"Record saltato per errore: {e}")
-                time.sleep(2)
+                time.sleep(2) """
 
         #inserimento dei dati da file Excel   
-        """ df = deserialize_excel(collection_name)
+        df = deserialize_excel(collection_name)
         inseriti = 0
         falliti = 0
 
@@ -59,8 +58,8 @@ def main() -> None:
                 except Exception as e:
                     logger.warning(f"Record saltato per errore: {e}")
                     falliti += 1
-                time.sleep(2)
-        logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}") """
+                time.sleep(2) 
+        logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
    
         # per sostituire parti di path all interno dei blocchi html
         """ retrieved_data = retrieve_data(collection_name, "media-e-comunicazione/rassegna-dellarma/la-rassegna/anno-2016")
