@@ -17,12 +17,30 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 collection_name = 'paginas'
-url = "https://www.carabinieri.it/concorsi/area-concorsi/calendario-concorsi/concorsointernoruolonormaleufficiali43postIriservatoailgt14postiespsovrappecar29posti"
-slug = "atti-di-notifica"
+#url = "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/introduzione"
+#slug = "introduzione-5"
+
+mappa = {
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/la-cattura-del-bandito-musolino": "la-cattura-del-bandito-musolino",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/il-moretto-e-il-biondin": "il-moretto-e-il-biondin",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/nella-campagna-di-novara": "nella-campagna-di-novara",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/il-leggendario-gasco": "il-leggendario-gasco",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/il-processo-cuocolo": "il-processo-cuocolo",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/i-personaggi-della-camorra": "i-personaggi-della-camorra",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/i-carabinieri-finti-camorristi": "i-carabinieri-finti-camorristi",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/nel-primo-centenario-dei-reali-carabinieri": "nel-primo-centenario-dei-reali-carabinieri",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/cimenti-eroismi-ideali-(1814---1914)": "cimenti-eroismi-ideali-1814-1914",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/siamo-vivi-perchè-lui-volle-morire-per-noi": "siamo-vivi-perche-lui-volle-morire-per-noi",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/salvo-d'acquisto-eroe-e-martire-cristiano": "salvo-dacquisto-eroe-e-martire-cristiano",
+  "https://www.carabinieri.it/media---comunicazione/pubblicazioni/cronache-del-passato/i-racconti/parte-ii---1890---1964/i-carabinieri-durante-l'occupazione-nazista-da-fertilia-alle-fosse-ardeatine": "i-carabinieri-durante-loccupazione-nazista-da-fertilia-alle-fosse-ardeatine"
+}
 
 def main() -> None:   
         # recupera html e inserisce su strapi
-        """ try:
+    for item in mappa.items():
+        url = item[0]        
+        slug = item[1]
+        try:
             document_id = get_data(slug)
             centro_spalla = create_pagina_object(url)
             blocco_centrale = centro_spalla['blocco_centrale']
@@ -31,12 +49,11 @@ def main() -> None:
                 logger.error("Scraping fallito: blocco_centrale vuoto. Aggiornamento Strapi annullato per evitare sovrascrittura.")
                 return
             update_data(document_id, blocco_centrale, spalla_destra)
-            scrivi_report_excel(url.replace("https://www.carabinieri.it/", "").replace("/" + slug, ""), url, slug)
+            scrivi_report_excel(url.replace("https://www.carabinieri.it/", "").replace("/" + slug, ""), url, slug)                
         except Exception as e:
-            logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}") """
-        
+            logger.error(f"Errore durante la creazione o l'inserimento della pagina: {e}")
         #recupera html concorso e associa i cod
-        try:
+        """ try:
             document_id = 'y7lnxy37b2azfb1fbojg0qw9'
             bando_ids = []
             annullamento_ids = []
@@ -84,7 +101,7 @@ def main() -> None:
             print(document_id, bando_ids, annullamento_ids, documentiCorrelati_ids, normeTecniche_ids, avvisi_ids, esiti_ids)
             update_concorso(document_id, bando_ids, annullamento_ids, documentiCorrelati_ids, normeTecniche_ids, avvisi_ids, esiti_ids)
         except Exception as e:
-            logger.error(f"Errore durante l'associazione dei codici al concorso: {e}") 
+            logger.error(f"Errore durante l'associazione dei codici al concorso: {e}")  """
 
 if __name__ == "__main__":
     main()

@@ -14,8 +14,8 @@ token = os.getenv("STRAPI_API_TOKEN", "")
 strapi_url = os.getenv("STRAPI_BASE_URL", "")
 ssl_verify = os.getenv("STRAPI_SSL_VERIFY", "false").lower() == "true"
 proxy = {
-    "http": "socks5h://127.0.0.1:1080",
-    "https": "socks5h://127.0.0.1:1080"
+    "http": "",
+    "https": ""
     }
 
 def update_concorso(documentId: str, bando_ids: list, annullamento_ids: list, documentiCorrelati_ids: list, normeTecniche_ids: list, avvisi_ids: list, esiti_ids: list) -> None:
