@@ -12,7 +12,10 @@ token = os.getenv("STRAPI_API_TOKEN", "")
 strapi_url = os.getenv("STRAPI_BASE_URL", "")
 ssl_verify = os.getenv("STRAPI_SSL_VERIFY", "false").lower() == "true"
 image_source_base_url = os.getenv("IMAGE_SOURCE_BASE_URL", "")
-
+proxy = {
+    "http": "socks5h://127.0.0.1:1080",
+    "https": "socks5h://127.0.0.1:1080"
+    }
 # Chiamata GET verso Strapi per recuperare i dati del blocco centrale e del documentId, con filtro per slug
 def get_data(slug: str) -> str | None:
     path = strapi_url + 'paginas?pLevel=2&filters[slug][$eq]=' + slug
@@ -21,7 +24,7 @@ def get_data(slug: str) -> str | None:
         'Content-Type': 'application/json'
     }
     try:
-        get_response = req.get(path, headers=headers, verify=ssl_verify)
+        get_response = req.get(path, headers=headers, verify=ssl_verify, proxies=proxy)
         get_response.raise_for_status()
         data = get_response.json()['data'][0]
         blocco_centrale = data['blocco_centrale']
@@ -65,7 +68,7 @@ def find_and_replace_a(editor: str) -> str:
             if old_link_path.startswith(("www.", "https://", "http://")):
                 print(f"Skipping external link: {old_link_path}")
                 continue
-            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images")):
+            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images", "/Internet")):
                 print(f"Skipping non-document/image link: {old_link_path}")
                 continue
             full_link_url = image_source_base_url.rstrip("/") + old_link_path
@@ -113,7 +116,7 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
         }
     }
     try:
-        put_response = req.put(path, json=payload, headers=headers, verify=ssl_verify)
+        put_response = req.put(path, json=payload, headers=headers, verify=ssl_verify, proxies=proxy)
         put_response.raise_for_status()
         print(f"Data updated successfully for document ID: {documentId}")
     except req.RequestException as e:
@@ -139,7 +142,7 @@ def insert_image(image_path: str) -> str | None:
                 return old_image_url.replace('https://www.armacc-prod-portale.local', '')
             return old_image_url
         else:
-            response = req.post(path, files=files, headers=headers, verify=ssl_verify)
+            response = req.post(path, files=files, headers=headers, verify=ssl_verify, proxies=proxy)
             response.raise_for_status()
             image_id = response.json()[0]['id']
             image_path = response.json()[0]['url']
@@ -162,7 +165,7 @@ def image_exists(name: str) -> str | None:
         'Authorization': 'Bearer ' + token
     }
     try:
-        response = req.get(path, headers=headers, verify=ssl_verify)
+        response = req.get(path, headers=headers, verify=ssl_verify, proxies=proxy)
         response.raise_for_status()
         data = response.json()
         if data:
