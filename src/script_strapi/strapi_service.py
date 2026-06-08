@@ -65,10 +65,7 @@ def find_and_replace_a(editor: str) -> str:
             old_link_path = a_tag[start_index:end_index]
             print(f"Found link path: {old_link_path}")
 
-            if old_link_path.startswith(("www.", "https://", "http://")):
-                print(f"Skipping external link: {old_link_path}")
-                continue
-            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images", "/Internet")):
+            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images", "/Internet", "/internet", "https://www.carabinieri.it", "http://www.carabinieri.it")):
                 print(f"Skipping non-document/image link: {old_link_path}")
                 continue
             full_link_url = image_source_base_url.rstrip("/") + old_link_path
