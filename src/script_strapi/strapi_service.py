@@ -16,16 +16,16 @@ proxies = {
     "http": "socks5h://127.0.0.1:1080",
     "https": "socks5h://127.0.0.1:1080"
     }
-
-def insert(collection_name: str, data: dict) :
-    path = strapi_url + collection_name
-    headers = {
+headers = {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
     }
 
+def insert(collection_name: str, data: dict) :
+    path = strapi_url + collection_name
+
     try:
-        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify)
+        response = req.post(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
         response.raise_for_status()
         print(f"Data inserted successfully")
         return True
@@ -41,7 +41,7 @@ def retrieve_data(collection_name: str, section: str) -> list:
     }
 
     try:
-        response = req.get(path, headers=headers, verify=ssl_verify)
+        response = req.get(path, headers=headers, verify=ssl_verify, proxies=proxies)
         response.raise_for_status()
         return response.json().get("data", [])
     except req.RequestException as e:
@@ -61,8 +61,7 @@ def replace_and_update(collection_name: str, id: int, data: dict) -> bool:
                 if 'id' in contenuto:
                     del contenuto['id']
                 if contenuto['__component'] == 'shared.contenuto':
-                    contenuto['editor'] = replace(contenuto['editor'], "/media---comunicazione/", "/media-e-comunicazione/")
-                    contenuto['editor'] = replace(contenuto['editor'], "/rassegna-dell-arma/", "/rassegna-dellarma/")
+                    contenuto['editor'] = replace(contenuto['editor'], "href=", "")                    
         spalla_destra = data.get("spalla_destra", [])
         if len(spalla_destra) > 0 :
             for contenuto in spalla_destra:
@@ -90,7 +89,7 @@ def replace_and_update(collection_name: str, id: int, data: dict) -> bool:
         if 'publishedAt' in data:
             del data['publishedAt']
         print (f"Data to update for ID {id}: {json.dumps(data, indent=2)}")
-        response = req.put(path, json={"data": data}, headers=headers, verify=ssl_verify)
+        response = req.put(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
         response.raise_for_status()
         print(f"Data updated successfully for ID {id}")
         return True
@@ -100,3 +99,10 @@ def replace_and_update(collection_name: str, id: int, data: dict) -> bool:
 
 def replace(text: str, old: str, new: str) -> str:
     return text.replace(old, new) if text else text
+
+def put_al_volo(document_id: str) :
+    path = strapi_url + 'paginas/' + document_id
+    data = {
+        "titolo": "Carabinieri nell'umorismo"
+    }
+    response = req.put(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
