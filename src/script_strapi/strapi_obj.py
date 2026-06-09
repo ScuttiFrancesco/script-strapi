@@ -27,10 +27,13 @@ def parse_righe_tabella(url: str) -> list:
         t_body = retrive_html_block(url, "tbody")
         lista_path = []
         for righe in parse_html_block(t_body, "tr"):
-            link = righe.find("a")
-            if link and link.has_attr('href'):
-                path = link['href']
-                lista_path.append(path)
+            pdf = righe.find("a")
+            title = righe.find("td", class_="tabellaD")
+            title = righe.find("td", class_="tabellaP") if title is None else title
+            if pdf and pdf.has_attr('href'):
+                path = pdf['href']
+            ojb = {'title': title.text.strip(), 'pdf': path}    
+            lista_path.append(ojb)
         return lista_path
     except Exception as e:
         print(f"Errore durante il parsing delle righe della tabella: {e}")

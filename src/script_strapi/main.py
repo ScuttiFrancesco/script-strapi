@@ -24,13 +24,10 @@ def main() -> None:
     lista_files = parse_righe_tabella(url)
     for i, file_path in enumerate(lista_files):
         try:
-            file_info = insert_file(file_path)
-            slug = file_info['name'].split('.')[0]
-            file_id = file_info['file_id']
-            documentId = get_data(slug)
+            file_id = insert_file(file_path['pdf'])
+            title = file_path['title']
+            documentId = get_data(title)
             update_data(documentId, file_id)
-            if i >= 2:  
-                break
         except Exception as e:
             logger.error(f"Errore durante la creazione o l'inserimento dell'atto: {e}")
             continue
