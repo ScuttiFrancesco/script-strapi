@@ -16,6 +16,8 @@ proxy = {
     "http": "socks5h://127.0.0.1:1080",
     "https": "socks5h://127.0.0.1:1080"
     }
+
+
 # Chiamata GET verso Strapi per recuperare i dati del blocco centrale e del documentId, con filtro per slug
 def get_data(slug: str) -> str | None:
     path = strapi_url + 'paginas?pLevel=2&filters[slug][$eq]=' + slug
@@ -65,10 +67,17 @@ def find_and_replace_a(editor: str) -> str:
             old_link_path = a_tag[start_index:end_index]
             print(f"Found link path: {old_link_path}")
 
-            if not old_link_path.startswith(("/doc", "/docs", "/image", "/images", "/Internet", "/internet", "https://www.carabinieri.it", "http://www.carabinieri.it")):
-                print(f"Skipping non-document/image link: {old_link_path}")
-                continue
-            full_link_url = image_source_base_url.rstrip("/") + old_link_path
+            if not ".pdf" in old_link_path and not ".doc" in old_link_path and not ".docx" in old_link_path and not ".xls" in old_link_path and not ".xlsx" in old_link_path:
+                if old_link_path.startswith(("www.", "https://", "http://")):
+                    print(f"Skipping external link: {old_link_path}")
+                    continue
+                if not old_link_path.startswith(("/doc", "/docs", "/image", "/images")):
+                    print(f"Skipping non-document/image link: {old_link_path}")
+                    continue
+            if old_link_path.startswith("/"):
+                full_link_url = image_source_base_url.rstrip("/") + old_link_path
+            else:
+                full_link_url = old_link_path
             new_link_url = insert_image(full_link_url)
             if new_link_url:
                 print(f"Replacing with new link URL: {new_link_url}")
@@ -117,7 +126,9 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
         put_response.raise_for_status()
         print(f"Data updated successfully for document ID: {documentId}")
     except req.RequestException as e:
-        print(f"Error updating data: {e.response.text}")
+        print(f"Error updating data: {e}")
+        if e.response is not None:
+            print(f"  Body: {e.response.text}")
 
 # Chiamata POST verso Strapi per caricare una nuova immagine e ottenere il nuovo URL da inserire nel blocco centrale    
 def insert_image(image_path: str) -> str | None:
