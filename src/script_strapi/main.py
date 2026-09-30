@@ -22,18 +22,35 @@ lista_slug = [
 ]
 #slug = "anafim"
 lista = [
-    "programma-lavori-2024202629-03-2024",
-    "programma-lavori-2024-202631-10-2024",
-    "programma-lavori-2025-202720-03-2025",
-    "programma-lavori-2026-2028-16-06-2026",
-    "programma-lavori-2026-202824-03-2026",
-    "atti-relativi-alla-programmazione-di-lavori-opere-servizi-e-forniture"
+ 'Presentazione domande',
+'Esercitazione Test',
+'Prova preliminare',
+'Esiti Prova preliminare',
+'Prove efficienza fisica',
+'Prove Psico fisiche',
+'Accertamenti sanitari',
+ 'Accertamenti attitudinali',
+ 'Prova scritta',
+ 'Esiti Prova scritta',
+ 'Accertamenti lingua inglese',
+ 'Prova orale',
+ 'Prova orale matematica',
+ 'Prova facoltativa lingua straniera',
+ 'Prova orale facoltativa lingua straniera',
+ 'Graduatoria finale',
+ 'Incorporamento',
+ 'Tirocinio',
+ 'Riconvocati',
+ 'Prova di conoscenza della lingua inglese',
+ 'Prova di informatica'
 ]
 MAX_RETRIES = 5
 RETRY_DELAY = 10  # secondi
 
 def main() -> None:
-    doc_bloc = None
+    for name in lista:
+        download_image(f'https://www.carabinieri.it/images/default-source/iterconcorsuale/{name.replace(" ", "-")}.png', name + '.png')
+    """ doc_bloc = None
     for slug in lista_slug:
         for attempt in range(1, MAX_RETRIES + 1):
             doc_bloc = get_data(slug)
@@ -75,7 +92,7 @@ def main() -> None:
             logger.error("Nessun contenuto HTML trovato in Strapi dopo tutti i tentativi. Aggiornamento annullato.")
             return
         update_data(doc_bloc["documentId"], doc_bloc["blocco_centrale"], doc_bloc["spalla_destra"])
-        time.sleep(2)  
+        time.sleep(2)   """
     """ articoli = get_articoli()
         for articolo in articoli:
         if '<img ' in articolo['testo']:

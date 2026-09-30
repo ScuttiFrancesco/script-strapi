@@ -1,3 +1,5 @@
+from urllib import response
+
 import requests as req
 import os
 from dotenv import load_dotenv
@@ -182,3 +184,13 @@ def image_exists(name: str) -> str | None:
     except req.RequestException as e:
         print(f"Error checking image existence: {e}")
         return None
+
+def download_image(image_path: str, file_name: str) -> None:    
+    try:
+        response = req.get(image_path, stream=True, verify=ssl_verify)
+        response.raise_for_status()
+        with open(file_name, "wb") as f:
+            f.write(response.content)
+    except:
+        print(f"Error downloading image from {image_path}")
+    
