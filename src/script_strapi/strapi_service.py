@@ -1,9 +1,10 @@
+import json
 from urllib import response
 
 import requests as req
 import os
 from dotenv import load_dotenv
-import random
+import mimetypes
 import urllib3
 from deserialize_image import deserialize_image
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -19,9 +20,26 @@ proxy = {
     "https": "socks5h://127.0.0.1:1080"
     }
 
+def chiamata_test(url: str) -> None:
+    endpoint = strapi_url + url
+    headers = {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
+    try:
+        response = req.get(endpoint, headers=headers, verify=ssl_verify, proxies=proxy)
+        response.raise_for_status()
+        print(f"Test call successful. Status code: {response.status_code}")
+        print(json.dumps(response.json(), indent=4))
+    except req.RequestException as e:
+        print(f"Error during test call: {e}")
+        if e.response is not None:
+            print(f"  Status: {e.response.status_code}")
+            print(f"  Body: {e.response.text}")
+
 
 # Chiamata GET verso Strapi per recuperare i dati del blocco centrale e del documentId, con filtro per slug
-def get_data(slug: str) -> str | None:
+def get_data(slug: str,) -> str | None:
     path = strapi_url + 'paginas?pLevel=2&filters[slug][$eq]=' + slug
     headers = {
         'Authorization': 'Bearer ' + token,
@@ -193,4 +211,35 @@ def download_image(image_path: str, file_name: str) -> None:
             f.write(response.content)
     except:
         print(f"Error downloading image from {image_path}")
+
+# Chiamata POST verso Strapi per caricare un file locale e ottenere l'URL restituito da Strapi
+def insert_local_image(file_path: str) -> str | None:
+    path = strapi_url + "upload"
+    headers = {
+        'Authorization': 'Bearer ' + token
+    }
+    file_name = os.path.basename(file_path)
+    mime_type = mimetypes.guess_type(file_name)[0] or "application/octet-stream"
+
+    old_image_url = image_exists(file_name)
+    if old_image_url:
+        print(f"Image already exists in Strapi. Using existing URL: {old_image_url}")
+        return old_image_url
+    try:
+        with open(file_path, "rb") as f:
+            files = {'files': (file_name, f, mime_type)}
+            response = req.post(path, files=files, headers=headers, verify=ssl_verify, proxies=proxy)
+        response.raise_for_status()
+        uploaded = response.json()[0]
+        print(f"Image uploaded successfully. Image ID: {uploaded['id']} URL: {uploaded['url']}")
+        return uploaded['url']
+    except OSError as e:
+        print(f"Error reading file {file_path}: {e}")
+        return None
+    except req.RequestException as e:
+        print(f"Error uploading image: {e}")
+        if e.response is not None:
+            print(f"  Status: {e.response.status_code}")
+            print(f"  Body: {e.response.text}")
+        return None
     

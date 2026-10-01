@@ -1,9 +1,9 @@
 """Entry point principale dello script."""
 
 from __future__ import annotations;
-
+from pathlib import Path
 import logging;
-import os;
+import os
 from articoli import *
 import time;
 from strapi_service import *;
@@ -46,10 +46,15 @@ lista = [
 ]
 MAX_RETRIES = 5
 RETRY_DELAY = 10  # secondi
+root = Path(__file__).resolve().parents[2]
 
 def main() -> None:
-    for name in lista:
-        download_image(f'https://www.carabinieri.it/images/default-source/iterconcorsuale/{name.replace(" ", "-")}.png', name + '.png')
+    #insert_local_image(str(root / "Accertamenti attitudinali.png"))
+    chiamata_test('paginas')
+
+    """ for name in lista:
+        download_image(f'https://www.carabinieri.it/images/default-source/iterconcorsuale/{name.replace(" ", "-")}.png', name + '.png') """
+    
     """ doc_bloc = None
     for slug in lista_slug:
         for attempt in range(1, MAX_RETRIES + 1):
