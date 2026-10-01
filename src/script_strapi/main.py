@@ -77,9 +77,9 @@ def main() -> None:
         logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}")
    
         # per sostituire parti di path all interno dei blocchi html
-        """ retrieved_data = retrieve_data(collection_name, "media-e-comunicazione/rassegna-dellarma/la-rassegna/anno-2016")
-           for item in retrieved_data:
-           replace_and_update(collection_name, item['documentId'], item) """
-           
+        retrieved_data = retrieve_data(collection_name, "chi-siamo/curiosita/arte-e-cultura/in-miniatura/i-soldatini/i-soldatini-elenco-pag-2")
+        for item in retrieved_data:
+            replace_and_update(collection_name, item['documentId'], item)
+            #put_al_volo(item['documentId'])
 if __name__ == "__main__":
     main()
