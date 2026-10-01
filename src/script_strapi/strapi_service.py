@@ -3,6 +3,7 @@ import json
 import requests as req
 import urllib3
 import os
+from bs4 import BeautifulSoup as bs
 from dotenv import load_dotenv
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -17,7 +18,7 @@ proxies = {
     "https": "socks5h://127.0.0.1:1080"
     }
 
-def insert(collection_name: str, data: dict) :
+def insert(collection_name: str, data: dict) -> bool:
     path = strapi_url + collection_name
     headers = {
         'Authorization': 'Bearer ' + token,
@@ -32,7 +33,66 @@ def insert(collection_name: str, data: dict) :
     except req.RequestException as e:
         print(f"Error inserting data into {collection_name}: {e.response.text}")
         return False
-    
+
+def update_data(collection_name: str, data: dict, field: str) -> bool:
+
+    for key in data.keys():
+        if key == field:
+            titolo = data.get(key)
+        if key == "listaLink" or key == "linkUtili":
+            has_lista_link = key
+    id = retrieve_data_from_field(collection_name, field, titolo).get("documentId")
+    path = strapi_url + collection_name + f'/{id}'
+    headers = {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+    }
+    lista_link = data.get(has_lista_link, '')
+    soup = bs(lista_link, 'html.parser')
+    title_div = soup.find('div', class_='titoliBluServ')
+    title = title_div.get_text(strip=True) if title_div else ''
+    links = []
+    for link in soup.find_all('a'):
+        if 'href' in link.attrs:
+            links.append({
+                            "url": link.attrs['href'],
+                            "etichetta": link.get_text(strip=True)
+                        })
+    object_to_update = {
+        'listaLink': {
+            'title': title,
+            'links': links
+        }
+    }
+    try:
+        response = req.put(path, json={"data": object_to_update}, headers=headers, verify=ssl_verify)
+        response.raise_for_status()
+        print(f"Data updated successfully for ID {id}")
+        return True
+    except req.RequestException as e:
+        print(f"Error updating data in {collection_name} for ID {id}: {e.response.text}")
+        return False
+
+def retrieve_data_from_field(collection_name: str, field_name: str, field_value: str) -> dict:
+    path = strapi_url + collection_name + f'?filters[{field_name}][$eq]={field_value}&pLevel'
+    headers = {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
+    try:
+        response = req.get(path, headers=headers, verify=ssl_verify)
+        if response.status_code == 200:
+            data = response.json().get("data", [])
+            if data:
+                return data[0]
+            else:
+                print(f"No data found for {field_name} = {field_value} in {collection_name}")
+                return None
+    except req.RequestException as e:
+        print(f"Error retrieving data from {collection_name}: {e.response.text}")
+        return None
+            
+
 def retrieve_data(collection_name: str, section: str) -> list:
     path = strapi_url + collection_name + f'?filters[url_addizionali][path][$contains]={section}&pLevel'
     headers = {

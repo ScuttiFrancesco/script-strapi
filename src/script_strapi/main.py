@@ -10,7 +10,7 @@ import time
 from deserialize_excel_concorsi import create_strapi_object_concorsi, deserialize_excel_concorsi
 from strapi_fields import strapi_fields as sf
 from dotenv import load_dotenv
-from strapi_service import insert, replace_and_update, retrieve_data
+from strapi_service import insert, replace_and_update, retrieve_data, update_data
 from deserialize_excel import deserialize_excel, create_strapi_object
 from strapi_obj import *
 
@@ -42,16 +42,31 @@ def main() -> None:
                     logger.warning(f"Record saltato per errore: {e}")
                 time.sleep(2) """
 
-        #inserimento dei dati da file Excel   
+        # deserializzazione file Excel   
         df = deserialize_excel(collection_name)
         inseriti = 0
         falliti = 0
 
-        if df is not None:
+        # inseriemto dei dati nella collection Strapi
+        """ if df is not None:
             for dict in df.iloc:
                 try:
                     strapi_object = create_strapi_object(collection_name, dict.to_dict())
                     if insert(collection_name, strapi_object):
+                        inseriti += 1
+                    else:
+                        falliti += 1
+                except Exception as e:
+                    logger.warning(f"Record saltato per errore: {e}")
+                    falliti += 1
+                time.sleep(2) 
+        logger.info(f"Record inseriti: {inseriti}, Record falliti: {falliti}") """
+        # update lista link su strapi
+        if df is not None:
+            for dict in df.iloc:
+                try:
+                    strapi_object = create_strapi_object(collection_name, dict.to_dict())
+                    if  update_data(collection_name, strapi_object, 'title'):
                         inseriti += 1
                     else:
                         falliti += 1
