@@ -4,7 +4,6 @@ strapi_fields = {
     'medaglies': {'title': str, 'grado': str, 'dataConcessione': str, 'dataLuogoNascita': str, 'dataLuogoMorte': str, 'dataLuogoFatto': str, 'motivazione': str, 'note': str, 'linkUtili': str, 'categoria_medaglieres': dict, 'publicationDate': str},
     'concorso-faqs': {'numero': int, 'titolo': str, 'risposta': str, 'domanda': str, 'richiedente': str, 'categoria_faqs': dict, 'publicationDate': str},
     'attis': {'title': str, 'titolo': str, 'cig': str, 'data': str, 'note': str, 'categoria_attis': dict, 'publicationDate': str},
-    'concorsis': { 'titolo': str, 'stato': str,'numero': int, 'dataInizio': str, 'dataScadenzaDomanda': str, 'ruolo': str, 'mostraBoxPrenotaOnline': bool, 'tipologia': str, 'posti': str, 'sottotitolo': str, 'codiceConcorso': str, 'descrizione': str, 'listaLink': str, 'publicationDate': str},
     # VERIFICARE SE VIENE PASSATO IL CAMPO CATEGORIA-COCERS E IN CASO AGGIUNGERLO
     'comunicazioni-cocers': {'title': str, 'fonteTestoLibero': str, 'listaLink': str, 'fonte': str, 'contenuto': str, 'publicationDate': str},  
     'contattis': {'title': str, "telefono": str, 'sede': str, 'postaElettronicaCertificata': str, 'fax': str, 'email': str, 'publicationDate': str},
@@ -18,8 +17,8 @@ strapi_fields = {
     'ordini-giornos': {'title': str, 'comune': str, 'publicationDate': str},
     'amministrazione-trasparente-incarichi-conferitis': {'unitaAmministrativa': str, 'annoRiferimento': str, 'cognome': str, 'nome': str, 'qualifica': str, 'denominazioneSoggettoConferente': str, 'oggettoIncarico': str, 'dataInizio': str, 'dataFine': str, 'tipologiaIncarico': str, 'compenso': str, 'publicationDate': str},
     'paginas': {'title': str, 'ordineVisualizzazioneMenu': int, 'tipoLayout': str, 'pagina': dict},
-    'concorsis':{'numero': int, 'titolo': str, 'stato': str,'dataInizio': str, 'dataScadenzaDomanda': str, 'ruolo': str, 'mostraBoxPrenotaOnline': bool, 'tipologia': str, 'posti': str, 'sottotitolo': str, 'codiceConcorso': str, 'descrizione': str, 'listaLink': str, 'publicationDate': str},
     'concorso-provas':{'titoloProva': str, 'concorsis': dict, 'attivo': bool, 'azioneLink': str, 'descrizione': str, 'idGraduatoria': int},
     'concorso-novitas':{'titoloNovita': str, 'concorsis': dict, 'testo': str},
     'concorso-pubblico-proclamas':{'titoloProclamo': str, 'concorsis': dict,},
+    'concorsis':{'numero': int, 'titolo': str, 'stato': str,'dataInizio': str, 'dataScadenzaDomanda': str, 'ruolo': str, 'mostraBoxPrenotaOnline': bool, 'tipologia': str, 'posti': str, 'sottotitolo': str, 'codiceConcorso': str, 'descrizione': str, 'listaLink': str, 'publicationDate': str},
 }

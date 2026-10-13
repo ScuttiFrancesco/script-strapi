@@ -17,6 +17,10 @@ proxies = {
     "http": "socks5h://127.0.0.1:1080",
     "https": "socks5h://127.0.0.1:1080"
     }
+headers = {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+    }
 
 def insert(collection_name: str, data: dict) -> bool:
     path = strapi_url + collection_name
