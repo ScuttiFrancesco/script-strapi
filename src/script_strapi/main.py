@@ -17,12 +17,12 @@ logger = logging.getLogger(__name__)
 #slug = "09-umorismo"
 lista_slug = [
    
-    "incarichi-conferiti-e-autorizzati-ai-dipendenti-dirigenti-e-non-dirigenti"
+    "sommario"
    
 ]
 #slug = "anafim"
 lista = [
- 'Presentazione domande',
+'Presentazione domande',
 'Esercitazione Test',
 'Prova preliminare',
 'Esiti Prova preliminare',
@@ -50,12 +50,14 @@ root = Path(__file__).resolve().parents[2]
 
 def main() -> None:
     #insert_local_image(str(root / "Accertamenti attitudinali.png"))
-    chiamata_test('paginas')
+    #chiamata_test('paginas')
+
+    #print(json.dumps(chiamata_test('paginas'), indent=2))
 
     """ for name in lista:
         download_image(f'https://www.carabinieri.it/images/default-source/iterconcorsuale/{name.replace(" ", "-")}.png', name + '.png') """
     
-    """ doc_bloc = None
+    doc_bloc = None
     for slug in lista_slug:
         for attempt in range(1, MAX_RETRIES + 1):
             doc_bloc = get_data(slug)
@@ -76,7 +78,7 @@ def main() -> None:
                 return
         update_data(doc_bloc["documentId"], doc_bloc["blocco_centrale"], doc_bloc["spalla_destra"])
 
-    for item in lista:
+    """ for item in lista:
         slug = item
         doc_bloc = None
         for attempt in range(1, MAX_RETRIES + 1):

@@ -21,13 +21,14 @@ proxy = {
     }
 
 def chiamata_test(url: str) -> None:
-    endpoint = strapi_url + url
+    endpoint = strapi_url + url + '/y0vmctqsp3mj0r4na0ak2kuf'
     headers = {
         'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
     try:
-        response = req.get(endpoint, headers=headers, verify=ssl_verify, proxies=proxy)
+        response = req.put(endpoint, json={'data':{'occhiello': 'un occhiello'}}, headers=headers, verify=ssl_verify, proxies=proxy)
         response.raise_for_status()
         print(f"Test call successful. Status code: {response.status_code}")
         print(json.dumps(response.json(), indent=4))
@@ -43,7 +44,8 @@ def get_data(slug: str,) -> str | None:
     path = strapi_url + 'paginas?pLevel=2&filters[slug][$eq]=' + slug
     headers = {
         'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
     try:
         get_response = req.get(path, headers=headers, verify=ssl_verify, proxies=proxy)
@@ -133,7 +135,8 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
     path = strapi_url + 'paginas/' + documentId
     headers = {
         'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
     payload = {
         "data": {
@@ -154,7 +157,8 @@ def update_data(documentId: str, blocco_centrale: list, spalla_destra: list) -> 
 def insert_image(image_path: str) -> str | None:
     path = strapi_url + "upload"
     headers = {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
     try:
         files = deserialize_image(image_path)
@@ -190,7 +194,8 @@ def insert_image(image_path: str) -> str | None:
 def image_exists(name: str) -> str | None:
     path = strapi_url + "upload/files?filters[name][$eq]=" + name
     headers = { 
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
     try:
         response = req.get(path, headers=headers, verify=ssl_verify, proxies=proxy)
@@ -216,7 +221,8 @@ def download_image(image_path: str, file_name: str) -> None:
 def insert_local_image(file_path: str) -> str | None:
     path = strapi_url + "upload"
     headers = {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
     file_name = os.path.basename(file_path)
     mime_type = mimetypes.guess_type(file_name)[0] or "application/octet-stream"
