@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Script di automazione per Strapi"
 requires-python = ">=3.13"
 dependencies = [
+    "beautifulsoup4>=4.12",
     "python-dotenv>=1.0",
     "requests>=2.32",
 ]

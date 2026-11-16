@@ -1,11 +1,15 @@
 import json
 from urllib import response
+from urllib.parse import urljoin, urlparse
 
 import requests as req
 import os
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import mimetypes
 import urllib3
+from dateutil import parser
+import time
 from deserialize_image import deserialize_image
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -16,27 +20,47 @@ strapi_url = os.getenv("STRAPI_BASE_URL", "")
 ssl_verify = os.getenv("STRAPI_SSL_VERIFY", "false").lower() == "true"
 image_source_base_url = os.getenv("IMAGE_SOURCE_BASE_URL", "")
 proxy = {
-    "http": "socks5h://127.0.0.1:1080",
-    "https": "socks5h://127.0.0.1:1080"
+    "http": "",
+    "https": ""
     }
 
-def chiamata_test(url: str) -> None:
-    endpoint = strapi_url + url + '/y0vmctqsp3mj0r4na0ak2kuf'
+def chiamata_test(url: str, pag: int) -> None:
+    endpoint = strapi_url + url
     headers = {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
     }
+    params = {
+        "fields[0]": "anno",
+        "fields[1]": "publicationDate",
+        "pagination[page]": str(pag),
+        "pagination[pageSize]": "500",
+        "sort[0]": "anno:desc"
+    }
     try:
-        response = req.put(endpoint, json={'data':{'occhiello': 'un occhiello'}}, headers=headers, verify=ssl_verify, proxies=proxy)
-        response.raise_for_status()
-        print(f"Test call successful. Status code: {response.status_code}")
-        print(json.dumps(response.json(), indent=4))
+        response = req.get(endpoint, params=params, headers=headers, proxies=proxy, verify=ssl_verify)
+        response.raise_for_status
+        response = response.json()['data']
+        for item in response:
+            publication_date = item['publicationDate']
+            anno = item['anno']
+            if not anno:
+                if publication_date:
+                    iso_parsed = parser.isoparse(publication_date)
+                    anno = iso_parsed.year
+                else:
+                    print(f"ATTENZIIONE PUBLICATION DATE MANCANTE PER {item['documentId']}")
+                    continue
+                put_response = req.put(f"{endpoint}/{item['documentId']}", json={"data":{"anno":anno}}, headers=headers, proxies=proxy, verify=ssl_verify)
+                put_response.raise_for_status
+                if put_response.status_code == 200:
+                    print(f"UPDATED: {item['documentId']}")
+                time.sleep(0.5)
+            else:
+                print(f"........Anno già presente per {item['documentId']}")            
     except req.RequestException as e:
-        print(f"Error during test call: {e}")
-        if e.response is not None:
-            print(f"  Status: {e.response.status_code}")
-            print(f"  Body: {e.response.text}")
+        print(f"Errore request: {e}")
 
 
 # Chiamata GET verso Strapi per recuperare i dati del blocco centrale e del documentId, con filtro per slug
@@ -217,6 +241,22 @@ def download_image(image_path: str, file_name: str) -> None:
     except:
         print(f"Error downloading image from {image_path}")
 
+
+def edit_file_name(file_name: str) -> str | None:
+
+    splitted = file_name.split('_2022')
+    if len(splitted) < 2:
+        print(f"ATTENZIONE: file saltato {file_name}")
+        return
+    else:
+        if splitted[1].startswith('_'):
+            new_file_name = splitted[0] + '_2022' + splitted[1][:2] + '.pdf'
+        else:
+            new_file_name = splitted[0] + '_2022' + '.pdf'
+    return new_file_name
+
+    
+
 # Chiamata POST verso Strapi per caricare un file locale e ottenere l'URL restituito da Strapi
 def insert_local_image(file_path: str) -> str | None:
     path = strapi_url + "upload"
@@ -248,4 +288,6 @@ def insert_local_image(file_path: str) -> str | None:
             print(f"  Status: {e.response.status_code}")
             print(f"  Body: {e.response.text}")
         return None
+
+
     
