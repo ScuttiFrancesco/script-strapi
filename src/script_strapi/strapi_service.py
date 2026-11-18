@@ -38,7 +38,8 @@ def insert(collection_name: str, data: dict) :
         print(f"Data inserted successfully")
         return True
     except req.RequestException as e:
-        print(f"Error inserting data into {collection_name}: {e.response.text}")
+        print(f"Error inserting data into {collection_name}: {getattr(e.response, 'text', e)}")
+        print(f"Record saltato: {json.dumps(data, indent=4)}")
         return False
 
 def update_data(collection_name: str, data: dict, field: str) -> bool:
