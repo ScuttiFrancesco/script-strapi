@@ -168,9 +168,21 @@ def replace_and_update(collection_name: str, id: int, data: dict) -> bool:
 def replace(text: str, old: str, new: str) -> str:
     return text.replace(old, new) if text else text
 
-def put_al_volo(document_id: str) :
-    path = strapi_url + 'paginas/' + document_id
-    data = {
-        "titolo": "Carabinieri nell'umorismo"
-    }
-    response = req.put(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
+def put_al_volo(data: dict, document_id: str, collection: str = 'paginas' ) :
+    path = f"{strapi_url}{collection}/{document_id}"
+    try:    
+        response = req.put(path, json={"data": data}, headers=headers, verify=ssl_verify, proxies=proxies)
+        response.raise_for_status()
+        print(f"{document_id} Updated successfuly")
+    except req.RequestException as e:
+        print(f"Error inserting data into {collection}: {getattr(e.response, 'text', e)}")
+
+def get_data_strapi(endpoint:str, params: dict) -> list:
+    endpoint = strapi_url + endpoint
+    while True:
+        try:
+            response = req.get(endpoint, params=params, headers=headers, proxies=proxies, verify=ssl_verify)
+            response.raise_for_status()
+            return response.json()['data']
+        except req.RequestException as e:
+            print(f"Error rquesting : {e}")

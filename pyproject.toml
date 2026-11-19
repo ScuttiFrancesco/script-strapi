@@ -9,7 +9,12 @@ description = "Script di automazione per Strapi"
 requires-python = ">=3.13"
 dependencies = [
     "python-dotenv>=1.0",
-    "requests>=2.32",
+    "requests[socks]>=2.32",
+    "urllib3>=2.0",
+    "pandas>=2.2",
+    "openpyxl>=3.1",
+    "beautifulsoup4>=4.12",
+    "python-slugify>=8.0",
 ]
 
 [project.optional-dependencies]
